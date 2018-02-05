@@ -1,0 +1,111 @@
+<div class="col-md-12 cardWidget">
+    <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12">
+        <div class="widget-comp row">
+            <app-widget-header-button-comp></app-widget-header-button-comp>
+            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                fff
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-lg-8 col-sm-7 col-xs-12">
+        <div class="widget-comp row">
+            <app-widget-header-button-comp></app-widget-header-button-comp>
+            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                hh
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<!--remove br tag in final project-->
+<br>
+
+<div class="col-md-12">
+    <mat-card class="remove-padding">
+        <mat-tab-group class="child-left-menu widget-comp">
+            <mat-tab label="Tab 1" *ngFor="let customer of customerRegist">
+                <ng-template mat-tab-label>
+                    <mat-icon>home</mat-icon>
+                    {{customer}}
+                </ng-template>
+
+                <app-widget-header-button-comp></app-widget-header-button-comp>
+                <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12 child-left-menu-content">
+                    <mat-form-field>
+                        <input matInput placeholder="Input">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Input">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="Select">
+                            <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <textarea matInput placeholder="Textarea"></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <textarea matInput placeholder="Textarea"></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker" placeholder="date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-slide-toggle>Slide</mat-slide-toggle>
+
+
+                    <div class="col-md-6 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <mat-table #table [dataSource]="dataSource">
+
+                                    <!--- Note that these columns can be defined in any order.
+                                          The actual rendered columns are set as a property on the row definition" -->
+
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="position">
+                                        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="name">
+                                        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Weight Column -->
+                                    <ng-container matColumnDef="weight">
+                                        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="symbol">
+                                        <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                </mat-table>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <app-button-footer></app-button-footer>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card>
+
+</div>

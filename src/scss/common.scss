@@ -1,0 +1,430 @@
+@import "font_face";
+@import "var";
+@import "bootstrap";
+@import "mixin";
+@import "resposive";
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: $fontFamily
+
+}
+
+.mat-button, .mat-fab, .mat-icon-button, .mat-mini-fab, .mat-raised-button {
+  font-family: $fontFamily;
+  text-transform: uppercase;
+}
+
+//Left menu font color change
+.mat-expansion-panel-header-title, .mat-expansion-panel {
+  color: $menufontColor;
+  text-transform: uppercase;
+}
+
+.mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
+  background: $primaryButton;
+}
+
+.mat-fab.mat-accent, .mat-mini-fab.mat-accent, .mat-raised-button.mat-accent {
+  background: $accentButton;
+}
+
+.remove-padding {
+  padding: 0 !important;
+}
+
+.cardWidget {
+
+}
+
+.main-wrapper {
+  position: relative;
+  mat-drawer-container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 63px;
+    mat-drawer {
+      min-width: 300px;
+      max-width: 300px;
+    }
+  }
+}
+
+//---------------------------------------------------------------------------
+//header;
+//---------------------------------------------------------------------------
+
+.mat-toolbar-single-row.main-header {
+  padding: 0;
+  align-items: normal;
+
+  .header-first {
+    min-width: 300px;
+    max-width: 300px;
+    background: $leftMenuBG;
+    border-bottom: 2px solid darken($leftMenuBG, 5%);
+    .logo-section {
+      padding: 7px 12px;
+      .menu-button {
+        float: right;
+        color: $menufontColor;
+        @include box_ShadowNone;
+        mat-icon {
+          font-size: 30px;
+          padding: 8px 0;
+          width: auto;
+          height: auto;
+        }
+        &:hover {
+          color: $bodyColor;
+        }
+      }
+      .mat-button-toggle-checked {
+        background: transparent;
+        color: $bodyColor;
+      }
+    }
+  }
+}
+
+.header-right {
+  border-bottom: 2px solid darken($bodyColor, 5%);
+}
+
+//search
+.main-search {
+  font-size: 14px;
+  display: flex;
+  height: 50px;
+  flex-direction: column;
+
+  .mat-form-field-flex {
+    display: inline-flex;
+    align-items: baseline;
+    width: 100%;
+  }
+
+}
+
+.main-search > * {
+  width: 100%;
+}
+
+.logout-card {
+  background: darken($leftMenuBG, 2%);
+  @include box_ShadowNone;
+  position: relative;
+  color: $menufontColor;
+  .logout-image {
+    background-image: url('../assets/img/user.png');
+    background-size: cover;
+  }
+  .logout-image.mat-card-avatar {
+    height: 55px;
+    width: 55px;
+    border: 5px solid lighten($leftMenuBG, 5%);
+  }
+  .logout-button {
+    position: absolute;
+    right: 12px;
+    .logout-sub {
+      top: 100px !important;
+      left: 100px !important;
+    }
+  }
+  .mat-card-header-text {
+    .mat-card-title {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: $bodyColor;
+    }
+    .mat-card-subtitle {
+      color: $menufontColor;
+    }
+  }
+}
+
+//---------------------------------------------------------------------------
+//LeftMenu;
+//---------------------------------------------------------------------------
+.bizop-sidenav {
+  background: $leftMenuBG;
+
+  .mat-expansion-panel-header {
+    font-family: $fontFamily;
+    padding: 0 12px;
+  }
+  .mat-expansion-panel-spacing {
+    margin: 0;
+  }
+  .mat-expansion-panel-body {
+    padding: 0;
+    .mat-list, .mat-nav-list {
+      padding: 0;
+      button {
+        width: 100%;
+        display: block;
+        background: transparent;
+        @include box_ShadowNone;
+        padding: 6px 28px 6px 40px;
+        text-align: left;
+        color: $menufontColor;
+        text-transform: capitalize;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &:hover, &:focus {
+          background: lighten($leftMenuBG, 15%);
+          position: relative;
+          &:before {
+            content: "";
+            display: block;
+            height: 100%;
+            width: 1px;
+            background: $active;
+            position: absolute;
+            left: 22px;
+            top: 0;
+          }
+          &:after {
+            content: "";
+            display: block;
+            @include border-radiusk(50px);
+            width: 10px;
+            height: 10px;
+            background: $currentSelect;
+            position: absolute;
+            left: 18px;
+            top: 19px;
+            @include transition2s;
+
+          }
+        }
+      }
+      button.selected {
+        background: lighten($leftMenuBG, 30%);
+      }
+    }
+
+  }
+  .mat-expansion-panel {
+    background: $leftMenuBG;
+    @include box_ShadowNone;
+
+    //menu expanded
+    .mat-expanded {
+      background: $active;
+      &:focus, &:hover {
+        background: $active;
+      }
+      .mat-expansion-panel-header-title {
+        color: $bodyColor !important;
+      }
+      .mat-expansion-indicator {
+        &:after {
+          color: $bodyColor !important;
+        }
+      }
+
+      //mat-list
+
+      .mat-list {
+        position: relative;
+        &:before {
+          content: "";
+          display: block;
+          height: 100%;
+          width: 1px;
+          background: $active;
+          position: absolute;
+          left: 22px;
+          top: 0;
+        }
+
+        .mat-nav-list {
+          position: relative;
+          &:before {
+            content: "";
+            display: block;
+            @include border-radiusk(50px);
+            width: 10px;
+            height: 10px;
+            background: $currentSelect;
+            position: absolute;
+            left: 18px;
+            top: 19px;
+            @include transitionS;
+          }
+          &:hover {
+            position: relative;
+            &:before {
+              content: "";
+              display: block;
+              @include border-radiusk(50px);
+              width: 30px;
+              height: 30px;
+              background: lighten($leftMenuBG, 15%);
+              border: 1px solid $currentSelect;
+              position: absolute;
+              left: 9px;
+              top: 7px;
+              z-index: 50;
+              @include transitionS;
+              opacity: 0;
+            }
+          }
+        }
+      }
+      .active {
+        &:after {
+          content: "";
+          display: block;
+          height: 100%;
+          width: 4px;
+          background: $currentSelect;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+        &:hover {
+          &:before {
+            display: none !important;
+          }
+        }
+        button {
+          background: lighten($leftMenuBG, 16%);
+          color: $bodyColor;
+          &:after {
+            content: "";
+            display: block;
+            @include border-radiusk(50px);
+            width: 10px;
+            height: 10px;
+            background: $currentSelect;
+            position: absolute;
+            left: 18px;
+            top: 19px;
+          }
+          position: relative;
+          &:before {
+            content: "";
+            display: block;
+            height: 100%;
+            width: 1px;
+            background: $active;
+            position: absolute;
+            left: 22px;
+            top: 0;
+          }
+
+        }
+      }
+      &:after {
+        content: "";
+        display: block;
+        height: 100%;
+        width: 4px;
+        background: lighten($active, 8%);
+        position: relative;
+        left: 11px;
+      }
+    }
+
+    .mat-expansion-panel-content {
+      background: lighten($leftMenuBG, 10%);
+      &:hover {
+        background: lighten($leftMenuBG, 10%);
+      }
+    }
+    mat-icon {
+      font-size: 22px;
+      margin-right: 6px;
+      margin-top: -2px;
+    }
+  }
+  .mat-expansion-indicator {
+    &:after {
+      color: $menufontColor;
+    }
+  }
+
+}
+
+//---------------------------------------------------------------------------
+//Widget;
+//---------------------------------------------------------------------------
+
+.widget-comp {
+  border: 1px solid $border;
+  //display: inline-block;
+  //width: 100%;
+  .widget-header {
+    padding: 2px;
+    background: darken($lightGray, 3%);
+    border-bottom: 1px solid $border;
+  }
+  .widget-header-button-comp {
+    .mat-icon-button {
+      border-left: 1px solid $border;
+      @include border-radiusk(0);
+    }
+    .mat-icon {
+      font-size: 18px;
+    }
+  }
+}
+
+.mat-icon {
+  color: $menufontColor;
+}
+
+//---------------------------------------------------------------------------
+//child left menu & tab view;
+//---------------------------------------------------------------------------
+
+.mat-tab-label-active {
+  color: $active;
+}
+
+.mat-tab-label, .mat-tab-link {
+  font-family: $fontFamily;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background: $active;
+}
+
+.mat-tab-group.child-left-menu {
+  .mat-tab-labels {
+    .mat-tab-label {
+      opacity: 1;
+      padding: 0 10px;
+      text-align: left;
+      color: $defaultFontColor;
+      &:focus {
+        background: $active !important;
+      }
+      .mat-icon {
+        font-size: 18px;
+        position: relative;
+        top: 3px;
+      }
+    }
+  }
+  .mat-tab-label-active {
+    background: $active;
+    color: $bodyColor !important;
+    .mat-icon {
+      color: $bodyColor;
+    }
+  }
+}
+
+.button-footer {
+  width: 100%;
+  text-align: right;
+  border-top: 1px solid $border;
+  padding: 5px 0;
+}

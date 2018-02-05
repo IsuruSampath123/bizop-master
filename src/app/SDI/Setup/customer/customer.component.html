@@ -1,0 +1,1276 @@
+<section class="content-header">
+    <h3>
+        Manage Customer
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Manage Customer</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <mat-tab-group>
+        <mat-tab label="Customer Personal Details">
+
+            <form [formGroup]="personalDetailsForm" (ngSubmit)="saveOrEditPersonalData(personalDetailsForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedCustomer?.id" formControlName="id" value="{{selectedCustomer != null && selectedCustomer.id != 0 ? selectedCustomer.id:''}}" placeholder="Customer Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedCustomer != null && selectedCustomer.id != 0) || !(personalDetailsForm.valid ) ">
+                <mat-icon>edit</mat-icon>
+              </button>
+                                        <button mat-icon-button type="button" (click)="printPersonalDetails()">
+                <mat-icon>print</mat-icon>
+              </button>
+                                        <button mat-icon-button type="button" (click)="addNewPersonalData()">
+                <mat-icon>add</mat-icon>
+              </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <input matInput id="genaratedId" readonly="true" name="genaratedId" [ngModel]="selectedCustomer?.genaratedId" formControlName="genaratedId" value="{{selectedCustomer != null && selectedCustomer.genaratedId !=null ? selectedCustomer.genaratedId:''}}" placeholder="Customer Id">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="customerName" name="customerName" [ngModel]="selectedCustomer?.customerName" formControlName="customerName" value="{{selectedCustomer != null && selectedCustomer.customerName !=null ? selectedCustomer.customerName:''}}" placeholder="Customer Name">
+                                        </mat-form-field>
+
+
+
+                                        <mat-form-field>
+                                            <input matInput id="addressLine1" name="addressLine1" formControlName="addressLine1" [ngModel]="selectedCustomer?.addressLine1" placeholder="Address Line1" type="text" value="{{selectedCustomer ? selectedCustomer.addressLine1:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="addressLine2" name="addressLine2" formControlName="addressLine2" [ngModel]="selectedCustomer?.addressLine2" placeholder="Address Line2" type="text" value="{{selectedCustomer ? selectedCustomer.addressLine2:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="addressLine3" name="addressLine3" formControlName="addressLine3" [ngModel]="selectedCustomer?.addressLine3" placeholder="Address Line3" type="text" value="{{selectedCustomer ? selectedCustomer.addressLine3:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="addressLine4" name="addressLine4" formControlName="addressLine4" [ngModel]="selectedCustomer?.addressLine4" placeholder="Address Line4" type="text" value="{{selectedCustomer ? selectedCustomer.addressLine4:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select placeholder="Languages" id="language" name="language" [ngModel]="selectedCustomer?.language" formControlName="language">
+                                                <mat-option *ngFor="let obj of this.languages" value={{obj.value}}>{{obj.label}}</mat-option>
+
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="salesOfficer" name="salesOfficer" [ngModel]="selectedCustomer?.salesOfficer" formControlName="salesOfficer" placeholder="Sales Officer" type="text" value="{{selectedCustomer ? selectedCustomer.salesOfficer:''}}">
+                                        </mat-form-field>
+
+
+
+                                        <mat-form-field>
+                                            <input matInput id="salesOfficerContact" name="salesOfficerContact" [ngModel]="selectedCustomer?.salesOfficerContact" formControlName="salesOfficerContact" placeholder="SalesOfficer Contact no" type="text" value="{{selectedCustomer ? selectedCustomer.salesOfficerContact:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="productionManager" name="productionManager" [ngModel]="selectedCustomer?.productionManager" formControlName="productionManager" placeholder="Production Manager" type="text" value="{{selectedCustomer ? selectedCustomer.productionManager:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="productionManagerContact" name="productionManagerContact" [ngModel]="selectedCustomer?.productionManagerContact" formControlName="productionManagerContact" placeholder="ProductionManager contact no" type="text" value="{{selectedCustomer ? selectedCustomer.productionManagerContact:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="productionManagerImage" name="productionManagerImage" formControlName="productionManagerImage" placeholder="ProductionManager Image">
+                                        </mat-form-field>
+
+                                    </div>
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="email" name="email" formControlName="email" [ngModel]="selectedCustomer?.email" placeholder="E-mail" type="text" value="{{selectedCustomer ? selectedCustomer.email:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="mainContact" name="mainContact" [ngModel]="selectedCustomer?.mainContact" formControlName="mainContact" placeholder="Main Contact Number" type="text" value="{{selectedCustomer ? selectedCustomer.mainContact:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="otherContact" name="otherContact" [ngModel]="selectedCustomer?.otherContact" formControlName="otherContact" placeholder="Other Contact Number" type="text" value="{{selectedCustomer ? selectedCustomer.otherContact:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="fax" name="fax" formControlName="fax" [ngModel]="selectedCustomer?.fax" placeholder="Fax Number" type="text" value="{{selectedCustomer ? selectedCustomer.fax:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="ownerImage" name="ownerImage" formControlName="ownerImage" placeholder="Owner Image">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="shopImage1" name="shopImage1" formControlName="shopImage1" placeholder="Shop Image1">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="shopImage2" name="shopImage2" formControlName="shopImage2" placeholder="Shop Image2">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="shopImage3" name="shopImage3" formControlName="shopImage3" placeholder="Shop Image3">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="gpslocation" name="gpslocation" formControlName="gpslocation" placeholder="GPS Location">
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteById(selectedCustomer.id)" [disabled]="selectedCustomer == null || selectedCustomer.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!personalDetailsForm.valid ) || (selectedCustomer != null && selectedCustomer.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Personal Details</h3>
+                                </div>
+
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb1 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+
+                                <p-dataTable [value]="allPersonalData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb1" selectionMode="single" [(selection)]="selectedCustomer" (onRowUnselect)="addNewPersonalData()">
+                                    <p-column field="genaratedId" header="Customer ID" [sortable]="true"></p-column>
+                                    <p-column field="customerName" header="Customer Name" [sortable]="true"></p-column>
+                                    <p-column field="mainContact" header="Contact No" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+
+
+
+        </mat-tab>
+
+        <mat-tab label="Customer Company Details">
+
+            <form [formGroup]="companDetailsForm" (ngSubmit)="saveOrEditCompanyData(companDetailsForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedCompany?.id" (ngModelChange)="SetCustomerIdCombo()" formControlName="id" value="{{selectedCompany != null && selectedCompany.id != 0 ? selectedCompany.id:''}}" placeholder="Company Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedCompany != null && selectedCompany.id != 0) || !(companDetailsForm.valid ) ">
+                <mat-icon>edit</mat-icon>
+              </button>
+                                        <button mat-icon-button type="button" (click)="printCompanyDetails()">
+                <mat-icon>print</mat-icon>
+              </button>
+                                        <button mat-icon-button type="button" (click)="addNewCompanyData()">
+                <mat-icon>add</mat-icon>
+              </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="genaratedId" name="genaratedId" formControlName="genaratedId" placeholder="Customer Company Id" readonly="true" type="text" [ngModel]="selectedCompany?.genaratedId" value="{{selectedCompany != null && selectedCompany.genaratedId != null ? selectedCompany.genaratedId:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCustomerId" placeholder="Customer" id="customerId" name="customerId" [ngModel]="selectedCompany?.customerId" formControlName="customerId">
+                                                <mat-option *ngFor="let obj of this.allCustomerOptions" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="companyName" name="company Registered Name" formControlName="companyName" [ngModel]="selectedCompany?.companyName" value="{{selectedCompany ? selectedCompany.companyName:''}}" placeholder="Company Registered Name" type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="companyRegNo" name="companyRegNo" formControlName="companyRegNo" [ngModel]="selectedCompany?.companyRegNo" value="{{selectedCompany !=null && selectedCompany.companyRegNo != null ? selectedCompany.companyRegNo:''}}" placeholder="Company Registered Number">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="addressLine1" name="addressLine1" formControlName="addressLine1" [ngModel]="selectedCompany?.addressLine1" placeholder="Address Line1" type="text" value="{{selectedCompany ? selectedCompany.addressLine1:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="addressLine2" name="addressLine2" formControlName="addressLine2" [ngModel]="selectedCompany?.addressLine2" placeholder="Address Line2" type="text" value="{{selectedCompany ? selectedCompany.addressLine2:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="addressLine3" name="addressLine3" formControlName="addressLine3" [ngModel]="selectedCompany?.addressLine3" placeholder="Address Line3" type="text" value="{{selectedCompany ? selectedCompany.addressLine3:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="addressLine4" name="addressLine4" formControlName="addressLine4" [ngModel]="selectedCompany?.addressLine4" placeholder="Address Line4" type="text" value="{{selectedCompany ? selectedCompany.addressLine4:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="mainContact" name="mainContact" formControlName="mainContact" [ngModel]="selectedCompany?.mainContact" value="{{selectedCompany !=null && selectedCompany.mainContact != 0 ? selectedCompany.mainContact:''}}" placeholder="Main Contact Number"
+                                                type="text"></mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="otherContact" name="otherContact" formControlName="otherContact" [ngModel]="selectedCompany?.otherContact" value="{{selectedCompany !=null && selectedCompany.otherContact != 0 ? selectedCompany.otherContact:''}}" placeholder="Other Contact Number"
+                                                type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="email" name="email" formControlName="email" [ngModel]="selectedCompany?.email" placeholder="Company E-mail" type="text" value="{{selectedCompany ? selectedCompany.email:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="fax" name="fax" formControlName="fax" [ngModel]="selectedCompany?.fax" placeholder="Company Fax Number" type="text" value="{{selectedCompany ? selectedCompany.fax:''}}">
+                                        </mat-form-field>
+
+
+
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="ownerName" name="ownerName" formControlName="ownerName" [ngModel]="selectedCompany?.ownerName" value="{{selectedCompany ? selectedCompany.ownerName:''}}" placeholder="Company Owner/Director Name" type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="ownerNic" name="ownerNic" formControlName="ownerNic" [ngModel]="selectedCompany?.ownerNic" placeholder="Owner/Director NIC Number" type="text" value="{{selectedCompany ? selectedCompany.ownerNic:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="ownerContact" name="ownerContact" formControlName="ownerContact" [ngModel]="selectedCompany?.ownerContact" placeholder="Owner/Director Contact Number" type="text" value="{{selectedCompany ? selectedCompany.ownerContact:''}}">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="ownerAddressLine1" name="ownerAddressLine1" formControlName="ownerAddressLine1" [ngModel]="selectedCompany?.ownerAddressLine1" value="{{selectedCompany ? selectedCompany.ownerAddressLine1:''}}" placeholder="Owner Personal Address Line 1"
+                                                type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="ownerAddressLine2" name="ownerAddressLine2" formControlName="ownerAddressLine2" [ngModel]="selectedCompany?.ownerAddressLine2" value="{{selectedCompany ? selectedCompany.ownerAddressLine2:''}}" placeholder="Owner Personal Address Line 2"
+                                                type="text">
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input matInput id="ownerAddressLine3" name="ownerAddressLine3" formControlName="ownerAddressLine3" [ngModel]="selectedCompany?.ownerAddressLine3" value="{{selectedCompany ? selectedCompany.ownerAddressLine3:''}}" placeholder="Owner Personal Address Line 3"
+                                                type="text">
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input matInput id="ownerAddressLine4" name="ownerAddressLine4" formControlName="ownerAddressLine4" [ngModel]="selectedCompany?.ownerAddressLine4" value="{{selectedCompany ? selectedCompany.ownerAddressLine4:''}}" placeholder="Owner Personal Address Line 4"
+                                                type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="vat" name="vat" formControlName="vat" [ngModel]="selectedCompany?.vat" value="{{selectedCompany ? selectedCompany.vat:''}}" placeholder="VAT No" type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="nbt" name="nbt" formControlName="nbt" [ngModel]="selectedCompany?.vat" value="{{selectedCompany ? selectedCompany.nbt:''}}" placeholder="NBT No" type="text">
+                                        </mat-form-field>
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteCompanyById(selectedCompany.id)" [disabled]="selectedCompany == null || selectedCompany.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!companDetailsForm.valid ) || (selectedCompany != null && selectedCompany.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Company Details</h3>
+                                </div>
+
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb1 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+
+                                <p-dataTable [value]="allCompanyData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb1" selectionMode="single" [(selection)]="selectedCompany" (onRowUnselect)="addNewCompanyData()">
+                                    <p-column field="genaratedId" header="Customer ID" [sortable]="true"></p-column>
+                                    <p-column field="customer.customerName" header="Customer Name" [sortable]="true"></p-column>
+                                    <p-column field="companyName" header=" Company Name" [sortable]="true"></p-column>
+                                    <p-column field="companyRegNo" header="Company Reg No" [sortable]="true"></p-column>
+                                    <p-column field="mainContact" header=" Contact No" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+
+
+
+        </mat-tab>
+
+        <mat-tab label="Customer Directors Details">
+
+            <form [formGroup]="directorsDetailsForm" (ngSubmit)="saveOrEditDirectorData(directorsDetailsForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedDirector?.id" (ngModelChange)="SetComboValuesForDirectors()" formControlName="id" value="{{selectedDirector != null && selectedDirector.id != 0 ? selectedDirector.id:''}}" placeholder="Customer Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedDirector != null && selectedDirector.id != 0) || !(directorsDetailsForm.valid ) ">
+                                <mat-icon>edit</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)=" printDirectorsDetails()">
+                                <mat-icon>print</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="addNewDirectorData()">
+                                <mat-icon>add</mat-icon>
+                              </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCustomerIdForDirectors" placeholder="Customer" id="customerId" name="customerId" [ngModel]="selectedDirector?.customerId" formControlName="customerId" (ngModelChange)="changeDataDirectors($event)">
+                                                <mat-option *ngFor="let obj of this.allCustomerOptions" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCompanyIdForDirectors" placeholder="Company" id="companyId" name="companyId" [ngModel]="selectedDirector?.companyId" formControlName="companyId">
+                                                <mat-option *ngFor="let obj of this.allCompanyOptionsForDirectors" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+
+
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="directorName" name="directorName" formControlName="directorName" [ngModel]="selectedDirector?.directorName" placeholder="Other Directors/Partners Name" type="text" value="{{selectedDirector != null && selectedDirector.directorName != null ? selectedDirector.directorName:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="directorNic" name="directorNic" formControlName="directorNic" [ngModel]="selectedDirector?.directorNic" placeholder="Other Partners NIC Number" type="text" value="{{selectedDirector != null && selectedDirector.directorNic != null ? selectedDirector.directorNic:''}}">
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteDirectorById(selectedDirector.id)" [disabled]="selectedDirector == null || selectedDirector.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!directorsDetailsForm.valid ) || (selectedDirector != null && selectedDirector.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Other Director/Partners Details</h3>
+                                </div>
+
+                                <div class="ui-widget-header ui-helper-clearfix">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb3 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allDirectorsData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb3" selectionMode="single" [(selection)]="selectedDirector" (onRowUnselect)="addNewDirectorData()">
+                                    <p-column field="customer.customerName" header="Customer Name" [sortable]="true"></p-column>
+                                    <p-column field="company.companyName" header="Company" [sortable]="true"></p-column>
+                                    <p-column field="directorName" header="Director/Partner Name" [sortable]="true"></p-column>
+                                    <p-column field="directorNic" header="Director/Partner NIC" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </mat-tab>
+
+
+        <mat-tab label="Customer Account Details">
+
+            <form [formGroup]="accountsDetailsForm" (ngSubmit)="saveOrEditAccountData(accountsDetailsForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedAccount?.id" (ngModelChange)="SetComboValuesForAccount()" formControlName="id" value="{{selectedAccount != null && selectedAccount.id != 0 ? selectedAccount.id:''}}" placeholder="Account Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedAccount != null && selectedAccount.id != 0) || !(accountsDetailsForm.valid ) ">
+                                <mat-icon>edit</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="printAccountDetails()">
+                                <mat-icon>print</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="addNewAccountData()">
+                                <mat-icon>add</mat-icon>
+                              </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCustomerIdForAccount" placeholder="Customer" id="customerId" name="customerId" [ngModel]="selectedAccount?.customerId" formControlName="customerId" (ngModelChange)="changeDataAccounts($event)">
+                                                <mat-option *ngFor="let obj of this.allCustomerOptions" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCompanyIdForAccount" placeholder="Company" id="companyId" name="companyId" [ngModel]="selectedAccount?.companyId" formControlName="companyId">
+                                                <mat-option *ngFor="let obj of this.allCompanyOptionsForAccounts" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedBankIdForAccount" placeholder="Bank" id="bankId" name="bankId" [ngModel]="selectedAccount?.bankId" formControlName="bankId">
+                                                <mat-option *ngFor="let obj of this.allbankOptions" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+
+
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="branch" name="branch" formControlName="branch" [ngModel]="selectedAccount?.branch" value="{{selectedAccount !=null && selectedAccount.branch != null ? selectedAccount.branch:''}}" placeholder="Branch" type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="bankAccount" name="bankAccount" formControlName="bankAccount" [ngModel]="selectedAccount?.bankAccount" value="{{selectedAccount ? selectedAccount.bankAccount:''}}" placeholder="Bank Account Name" type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="accountNumber" name="accountNumber" formControlName="accountNumber" [ngModel]="selectedAccount?.accountNumber" value="{{selectedAccount !=null && selectedAccount.accountNumber != null ? selectedAccount.accountNumber:''}}" placeholder="Bank Account Number"
+                                                type="text">
+                                        </mat-form-field>
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteAccountById(selectedAccount.id)" [disabled]="selectedAccount == null || selectedAccount.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!accountsDetailsForm.valid ) || (selectedAccount != null && selectedAccount.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Bank Account Details</h3>
+                                </div>
+
+                                <div class="ui-widget-header ui-helper-clearfix">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb4 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allAccountsData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb4" selectionMode="single" [(selection)]="selectedAccount" (onRowUnselect)="addNewAccountData()" (ngModelChange)="changeDataAccountsTable()">
+                                    <p-column field="customer.customerName" header="Customer" [sortable]="true"></p-column>
+                                    <p-column field="company.companyName" header="Company" [sortable]="true"></p-column>
+                                    <p-column field="bank.bankName" header="Bank" [sortable]="true"></p-column>
+                                    <p-column field="accountNumber" header="Account Number" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+        </mat-tab>
+
+
+        <mat-tab label="Customer Debit Details">
+
+            <form [formGroup]="debitDetailsForm" (ngSubmit)="saveOrEditDebitData(debitDetailsForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedDebit?.id" formControlName="id" (ngModelChange)="SetComboValuesForDebit()" value="{{selectedDebit != null && selectedDebit.id != 0 ? selectedDebit.id:''}}" placeholder="Customer Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedDebit != null && selectedDebit.id != 0) || !(debitDetailsForm.valid ) ">
+                                <mat-icon>edit</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="printDebitDetails()">
+                                <mat-icon>print</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="addNewDebitData()">
+                                <mat-icon>add</mat-icon>
+                              </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCustomerIdForDebit" placeholder="Customer" id="customerId" name="customerId" [ngModel]="selectedDebit?.customerId" formControlName="customerId" (ngModelChange)="changeDataDebit($event)">
+                                                <mat-option *ngFor="let obj of this.allCustomerOptions" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCompanyIdForDebit" placeholder="Company" id="companyId" name="companyId" [ngModel]="selectedDebit?.companyId" formControlName="companyId">
+                                                <mat-option *ngFor="let obj of this.allCompanyOptionsForDebit" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="debitLimit" name="debitLimit" formControlName="debitLimit" [ngModel]="selectedDebit?.debitLimit" value="{{selectedDebit ? selectedDebit.debitLimit:''}}" placeholder=" Debit Limit" type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="debitPeriod" name="debitPeriod" formControlName="debitPeriod" [ngModel]="selectedDebit?.debitPeriod" value="{{selectedDebit !=null && selectedDebit.debitPeriod != 0 ? selectedDebit.debitPeriod:''}}" placeholder="Debit Period">
+                                        </mat-form-field>
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteById(selectedDebit.id)" [disabled]="selectedDebit == null || selectedDebit.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!debitDetailsForm.valid ) || (selectedDebit != null && selectedDebit.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Debit Details</h3>
+                                </div>
+
+                                <div class="ui-widget-header ui-helper-clearfix">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb5 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allDebitData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb5" selectionMode="single" [(selection)]="selectedDebit" (onRowUnselect)="addNewDebitData()">
+                                    <p-column field="customer.customerName" header="Customer" [sortable]="true"></p-column>
+                                    <p-column field="company.companyName" header="Company" [sortable]="true"></p-column>
+                                    <p-column field="debitLimit" header="Debit Limit" [sortable]="true"></p-column>
+                                    <p-column field="debitPeriod" header="Debit Period" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+
+
+
+        </mat-tab>
+
+
+        <mat-tab label="Customer Request Debit">
+
+            <form [formGroup]="requestDebitDetailsForm" (ngSubmit)="saveOrEditRequestDebitData(requestDebitDetailsForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedRequestDebit?.id" (ngModelChange)="SetComboValuesForRequestDebit()" formControlName="id" value="{{selectedRequestDebit != null && selectedRequestDebit.id != 0 ? selectedRequestDebit.id:''}}" placeholder="Customer Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedRequestDebit != null && selectedRequestDebit.id != 0) || !(requestDebitDetailsForm.valid ) ">
+                                <mat-icon>edit</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="printRequestDebitDetails()">
+                                <mat-icon>print</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="addNewRequestDebitData()">
+                                <mat-icon>add</mat-icon>
+                              </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCustomerIdForRequestDebit" placeholder="Customer" id="customerId" name="customerId" [ngModel]="selectedRequestDebit?.customerId" formControlName="customerId" (ngModelChange)="changeDataRequestDebit($event)">
+                                                <mat-option *ngFor="let obj of this.allCustomerOptions" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCompanyIdForRequestDebit" placeholder="Company" id="companyId" name="companyId" [ngModel]="selectedRequestDebit?.companyId" formControlName="companyId">
+                                                <mat-option *ngFor="let obj of this.allCompanyOptionsForRequestDebit" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="requestDebitLimit" name="requestDebitLimit" formControlName="requestDebitLimit" [ngModel]="selectedRequestDebit?.requestDebitLimit" value="{{selectedRequestDebit ? selectedRequestDebit.requestDebitLimit:''}}" placeholder="Requested Debit Limit">
+                                        </mat-form-field>
+
+
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="aprovedDebitLimit" name="aprovedDebitLimit" formControlName="aprovedDebitLimit" [ngModel]="selectedRequestDebit?.aprovedDebitLimit" value="{{selectedRequestDebit ? selectedRequestDebit.aprovedDebitLimit:''}}" placeholder="Company Aproved Debit Limit">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="requestDebitPeriod" name="requestDebitPeriod" formControlName="requestDebitPeriod" [ngModel]="selectedRequestDebit?.requestDebitPeriod" value="{{selectedRequestDebit ? selectedRequestDebit.requestDebitPeriod:''}}" placeholder="Requested Time Period"
+                                                type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="aprovedDebitPeriod" name="aprovedDebitPeriod" formControlName="aprovedDebitPeriod" [ngModel]="selectedRequestDebit?.aprovedDebitPeriod" value="{{selectedRequestDebit ? selectedRequestDebit.aprovedDebitPeriod:''}}" placeholder="Aproved Time Period">
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteRequestDebitById(selectedRequestDebit.id)" [disabled]="selectedRequestDebit == null || selectedRequestDebit.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!requestDebitDetailsForm.valid ) || (selectedRequestDebit != null && selectedRequestDebit.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Customer Request Debit Details</h3>
+                                </div>
+
+                                <div class="ui-widget-header ui-helper-clearfix">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb6 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allRequestDebitData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb6" selectionMode="single" [(selection)]="selectedRequestDebit" (onRowUnselect)="addNewRequestDebitData()">
+                                    <p-column field="customer.customerName" header="Customer" [sortable]="true"></p-column>
+                                    <p-column field="company.companyName" header="Company" [sortable]="true"></p-column>
+                                    <p-column field="requestDebitLimit" header="Requested Debit Limit" [sortable]="true"></p-column>
+                                    <p-column field="requestDebitPeriod" header="Requested Debit Period" [sortable]="true"></p-column>
+                                    <p-column field="aprovedDebitLimit" header="Aproved Debit Limit" [sortable]="true"></p-column>
+                                    <p-column field="aprovedDebitPeriod" header="Aproved Debit Period" [sortable]="true"></p-column>
+                                </p-dataTable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+
+
+
+        </mat-tab>
+
+
+
+        <mat-tab label="Customer Transaction Details">
+
+            <form [formGroup]="transactionAuthorizedForm" (ngSubmit)="saveOrEditTransactionData(transactionAuthorizedForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedTransaction?.id" (ngModelChange)="SetComboValuesForTransaction()" formControlName="id" value="{{selectedTransaction != null && selectedTransaction.id != 0 ? selectedTransaction.id:''}}" placeholder="Customer Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedTransaction != null && selectedTransaction.id != 0) || !(transactionAuthorizedForm.valid ) ">
+                                <mat-icon>edit</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="printTransactionDetails()">
+                                <mat-icon>print</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="addNewTransactionData()">
+                                <mat-icon>add</mat-icon>
+                              </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCustomerIdForTransaction" placeholder="Customer" id="customerId" name="customerId" [ngModel]="selectedTransaction?.customerId" formControlName="customerId" (ngModelChange)="changeDataTransaction($event)">
+                                                <mat-option *ngFor="let obj of this.allCustomerOptions" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCompanyIdForTransaction" placeholder="Company" id="companyId" name="companyId" [ngModel]="selectedTransaction?.companyId" formControlName="companyId">
+                                                <mat-option *ngFor="let obj of this.allCompanyOptionsForTransaction" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="personName" name="personName" formControlName="personName" [ngModel]="selectedTransaction?.personName" value="{{selectedTransaction ? selectedTransaction.personName:''}}" placeholder="Authorized Person Name" type="text">
+                                        </mat-form-field>
+
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="post" name="post" formControlName="post" [ngModel]="selectedTransaction?.post" value="{{selectedTransaction !=null && selectedTransaction.post != 0 ? selectedTransaction.post:''}}" placeholder="Post" type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="contact" name="contact" formControlName="contact" [ngModel]="selectedTransaction?.contact" value="{{selectedTransaction ? selectedTransaction.contact:''}}" placeholder="Contact Number" type="text">
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteTransactionById(selectedTransaction.id)" [disabled]="selectedTransaction == null || selectedTransaction.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!transactionAuthorizedForm.valid ) || (selectedTransaction != null && selectedTransaction.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Authorized Person's Details</h3>
+                                </div>
+
+                                <div class="ui-widget-header ui-helper-clearfix">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb7 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allTransactionData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb7" selectionMode="single" [(selection)]="selectedTransaction" (onRowUnselect)="addNewTransactionData()">
+                                    <p-column field="customer.customerName" header="Customer" [sortable]="true"></p-column>
+                                    <p-column field="company.companyName" header="Company" [sortable]="true"></p-column>
+                                    <p-column field="post" header="Post" [sortable]="true"></p-column>
+                                    <p-column field="personName" header="Person Name" [sortable]="true"></p-column>
+                                    <p-column field="contact" header="Contact No" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+
+
+
+        </mat-tab>
+
+
+
+        <mat-tab label="Bank Promisess Details">
+
+            <form [formGroup]="promisessForm" (ngSubmit)="saveOrEditPromisessData(promisessForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedPromisess?.id" (ngModelChange)="SetComboValuesForPromisess()" formControlName="id" value="{{selectedPromisess != null && selectedPromisess.id != 0 ? selectedPromisess.id:''}}" placeholder="Customer Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedPromisess != null && selectedPromisess.id != 0) || !(promisessForm.valid ) ">
+                                <mat-icon>edit</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="printPromisessDetails()">
+                                <mat-icon>print</mat-icon>
+                              </button>
+                                        <button mat-icon-button type="button" (click)="addNewPromisessData()">
+                                <mat-icon>add</mat-icon>
+                              </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCustomerIdForPromisess" placeholder="Customer" id="customerId" name="customerId" [ngModel]="selectedPromisess?.customerId" formControlName="customerId" (ngModelChange)="changeDataPromisess($event)">
+                                                <mat-option *ngFor="let obj of this.allCustomerOptions" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedCompanyIdForPromisess" placeholder="Company" id="companyId" name="companyId" [ngModel]="selectedPromisess?.companyId" formControlName="companyId">
+                                                <mat-option *ngFor="let obj of this.allCompanyOptionsForPromisess" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="dipositPrice" name="dipositPrice" formControlName="dipositPrice" [ngModel]="selectedPromisess?.dipositPrice" value="{{selectedPromisess ? selectedPromisess.dipositPrice:''}}" placeholder="Diposit Price" type="text">
+                                        </mat-form-field>
+
+
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="bankPromisess" name="bankPromisess" formControlName="bankPromisess" [ngModel]="selectedPromisess?.bankPromisess" value="{{selectedPromisess ? selectedPromisess.bankPromisess:''}}" placeholder="Bank Promisess" type="text">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="bankPromisessNumber" name="bankPromisessNumber" formControlName="bankPromisessNumber" [ngModel]="selectedPromisess?.bankPromisessNumber" value="{{selectedPromisess ? selectedPromisess.bankPromisessNumber:''}}" placeholder="Bank Promisess Number"
+                                                type="text">
+                                        </mat-form-field>
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deletePromisessById(selectedPromisess.id)" [disabled]="selectedPromisess == null || selectedPromisess.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!promisessForm.valid ) || (selectedPromisess != null && selectedPromisess.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Bank Promisess Details</h3>
+                                </div>
+
+                                <div class="ui-widget-header ui-helper-clearfix">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb8 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allPromisessData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb8" selectionMode="single" [(selection)]="selectedPromisess" (onRowUnselect)="addNewPromisessData()">
+                                    <p-column field="customer.customerName" header="Customer" [sortable]="true"></p-column>
+                                    <p-column field="company.companyName" header="Company" [sortable]="true"></p-column>
+                                    <p-column field="dipositPrice" header="Diposit Price" [sortable]="true"></p-column>
+                                    <p-column field="bankPromisess" header="Bank Promisess" [sortable]="true"></p-column>
+                                    <p-column field="bankPromisessNumber" header="Bank Promisess Number" [sortable]="true"></p-column>
+                                </p-dataTable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+
+
+
+        </mat-tab>
+
+
+
+
+
+
+    </mat-tab-group>
+
+
+
+
+</section>

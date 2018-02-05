@@ -1,0 +1,126 @@
+<section class="content-header">
+    <h3>
+        Manage Sub Sub Catagory
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Manage Sub Sub Catagory</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <form [formGroup]="myForm" (ngSubmit)="saveOrEdit(myForm.value)">
+
+
+        <div class="col-md-6">
+
+            <div class="col-md-12 cardWidget">
+
+
+                <div class="widget-comp row">
+                    <div class="col-md-6 cardWidget" [hidden]="true">
+                        <mat-form-field>
+                            <input matInput id="id" name="id" (ngModelChange)="SetCombo($event,selected?.subCatagoryId,selected?.mainCatagoryId)" [ngModel]="selected?.id" formControlName="id" value="{{selected != null && selected.id != 0 ? selected.id:''}}" placeholder="Area Id">
+                        </mat-form-field>
+                    </div>
+                    <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                        <div class="widget-header-button-comp pull-right">
+                            <div class="button-row">
+                                <button mat-icon-button type="submit" [disabled]=" !(selected != null && selected.id != 0) || !(myForm.valid ) ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                <button mat-icon-button type="button" (click)="convert()">
+        <mat-icon>print</mat-icon>
+      </button>
+
+                                <button mat-icon-button type="button" (click)="addNew()">
+        <mat-icon>add</mat-icon>
+      </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="col-md-6 cardWidget">
+                            <mat-form-field>
+                                <input matInput id="genaratedId" name="genaratedId" [ngModel]="selected?.genaratedId" readonly="true" formControlName="genaratedId" value="{{selected != null && selected.genaratedId != 0 ? selected.genaratedId:''}}" placeholder="Sub Sub Catagory Id">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="subSubCatgoryImage" name="subSubCatgoryImage" [ngModel]="selected?.subSubCatgoryImage" formControlName="subSubCatgoryImage" value="{{selected != null && selected.subSubCatgoryImage != 0 ? selected.subSubCatgoryImage:''}}" placeholder="Sub Sub Catgory Image">
+                            </mat-form-field>
+
+
+                        </div>
+                        <div class="col-md-6 cardWidget">
+
+                            <mat-form-field>
+
+                                <mat-select [(value)]="mainCatagoryId1" (ngModelChange)="setsub($event)" [ngModel]="selected?.mainCatagoryId" placeholder="mainCatagory " id="mainCatagoryId" name="mainCatagoryId" formControlName="mainCatagoryId">
+                                    <mat-option *ngFor="let jack of this.allmainCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+
+                                </mat-select>
+
+                            </mat-form-field>
+
+                            <mat-form-field>
+
+                                <mat-select [(value)]="subCatagoryId1" [ngModel]="selected?.subCatagoryId" placeholder="sub Catagory" id="subCatagoryId" name="subCatagoryId" formControlName="subCatagoryId">
+                                    <mat-option *ngFor="let jack of this.allSubCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+
+                                </mat-select>
+
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="subSubCatagoryName" name="subSubCatagoryName" [ngModel]="selected?.subSubCatagoryName" formControlName="subSubCatagoryName" value="{{selected != null && selected.subSubCatagoryName != 0 ? selected.subSubCatagoryName:''}}" placeholder="Sub sub CatagoryName">
+                            </mat-form-field>
+
+
+                        </div>
+                        <div class="button-footer">
+                            <div class="button-row">
+                                <button mat-raised-button color="warn" type="button" (click)="deleteById(selected.id)" [disabled]="selected == null || selected.id == 0">Delete</button>
+
+                                <button mat-raised-button color="primary" type="submit" [disabled]="(!myForm.valid ) || (selected != null && selected.id != 0)">Save</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-12 cardWidget">
+
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Sub Sub Catagories</h3>
+                        </div>
+                        <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                            <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                            <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                        </div>
+                        <p-dataTable [value]="alldata" [responsive]="true" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+                            <p-column field="genaratedId" header="Catagory Id" [sortable]="true"></p-column>
+                            <p-column field="subSubCatagoryName" header="Catagory" [sortable]="true"></p-column>
+                        </p-dataTable>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</section>

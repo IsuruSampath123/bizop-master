@@ -1,0 +1,53 @@
+<mat-toolbar class="main-header mat-toolbar mat-toolbar-single-row" style="flex-direction: row; box-sizing: border-box; display: flex;">
+    <div class="header-first col-md-3">
+        <div class="logo-section">
+            <img src="techlac/assets/img/logo.png">
+            <mat-button-toggle class="menu-button" (click)="drawer.toggle()">
+                <mat-icon>reorder</mat-icon>
+            </mat-button-toggle>
+        </div>
+    </div>
+    <div class="col-md-12 header-right">
+        <app-header></app-header>
+    </div>
+</mat-toolbar>
+
+<div class="main-wrapper">
+
+    <mat-drawer-container class="bizop-container" autosize>
+        <mat-drawer #drawer class="bizop-sidenav" mode="side" opened="true">
+            <mat-card class="logout-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="logout-image"></div>
+                    <mat-card-title>Admin</mat-card-title>
+                    <mat-card-subtitle>Admin name</mat-card-subtitle>
+                    <div class="logout-button">
+                        <button mat-icon-button [matMenuTriggerFor]="logout">
+              <mat-icon>power_settings_new </mat-icon>
+            </button>
+                        <mat-menu #logout="matMenu" class="logout-sub">
+                            <button mat-menu-item>
+             <span>Setting</span>
+              </button>
+                            <button mat-menu-item>
+                <span>Log out</span>
+              </button>
+                        </mat-menu>
+                    </div>
+                </mat-card-header>
+            </mat-card>
+
+            <app-left-menu></app-left-menu>
+        </mat-drawer>
+
+
+
+
+        <div class="example-sidenav-content">
+            <router-outlet></router-outlet>
+        </div>
+
+
+
+    </mat-drawer-container>
+</div>

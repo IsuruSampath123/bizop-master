@@ -1,0 +1,404 @@
+<section class="content-header">
+    <h3>
+        Manage Invoice
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"> Manage Invoice</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <form [formGroup]="myForm" (ngSubmit)="saveOrEdit(myForm.value)">
+
+
+        <div class="col-md-6">
+
+            <div class="col-md-12 cardWidget">
+
+
+                <div class="widget-comp row">
+                    <div class="col-md-6 cardWidget" [hidden]="true">
+                        <mat-form-field>
+                            <input matInput id="id" name="id" [ngModel]="selected?.id" formControlName="id" value="{{selected != null && selected.id != 0 ? selected.id:''}}" placeholder="Area Id">
+                        </mat-form-field>
+                    </div>
+                    <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                        <div class="widget-header-button-comp pull-right">
+                            <div class="button-row">
+                                <button mat-icon-button type="submit" [disabled]=" !(selected != null && selected.id != 0) || !(myForm.valid ) ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                <button mat-icon-button type="button" (click)="convert()">
+        <mat-icon>print</mat-icon>
+      </button>
+
+                                <button mat-icon-button type="button" (click)="addNew()">
+        <mat-icon>add</mat-icon>
+      </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="col-md-6 cardWidget">
+                            <mat-form-field>
+                                <input matInput id="genaratedId" name="genaratedId" [ngModel]="selected?.genaratedId" readonly="true" formControlName="genaratedId" value="{{selected != null && selected.genaratedId != 0 ? selected.genaratedId:''}}" placeholder="Invoice No">
+                            </mat-form-field>
+
+
+                            <div [hidden]="visiblePartOrder">
+                                <mat-radio-group name="passInvoice" formControlName="passInvoice" name="passInvoice" [(ngModel)]="passInvoice" (ngModelChange)="DicisionChange($event)" formControlName="passInvoice">
+                                    <mat-radio-button value="1">Yes</mat-radio-button>
+                                    <mat-radio-button value="0">NO</mat-radio-button>
+
+                                </mat-radio-group>
+                            </div>
+
+                            <mat-form-field>
+                                <mat-select [(value)]="ordernumber" placeholder="Order" id="ordernumber" name="ordernumber" [(ngModel)]="ordernumber" (ngModelChange)="OrderChange($event)" formControlName="ordernumber">
+                                    <mat-option *ngFor="let jack of this.allordersOption" value={{jack.value}}>{{jack.label}}</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>
+
+
+
+                            <mat-form-field>
+                                <input matInput id="customer" name="customer" readonly="true" [(ngModel)]="customer" formControlName="customer" placeholder="Customer">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="vat" name="vat" readonly="true" [(ngModel)]="vat" formControlName="vat" placeholder="Customer VAT">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="nbt" name="nbt" readonly="true" [(ngModel)]="nbt" formControlName="nbt" placeholder="Customer NBT">
+                            </mat-form-field>
+
+                            <div *ngIf="showmenu3">
+
+                                <mat-form-field>
+                                    <input matInput id="vatregno" name="vatregno" readonly="true" [(ngModel)]="vatregno" formControlName="vatregno" placeholder="Vat Register NO">
+                                </mat-form-field>
+
+                                <mat-form-field>
+                                    <input matInput id="nbtno" name="nbtno" readonly="true" [(ngModel)]="nbtno" formControlName="nbtno" placeholder="NBT  NO">
+                                </mat-form-field>
+
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                                <label class="col-sm-8 control-label" for="customer">Ordered Person Details</label>
+                            </div>
+
+
+                            <mat-form-field>
+                                <input matInput id="orderperson" readonly="true" name="orderperson" [(ngModel)]="orderperson" formControlName="orderperson" placeholder="Orderd PersonName">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput id="post" readonly="true" name="post" [(ngModel)]="post" formControlName="post" placeholder="Orderd Person Post">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput id="contactnumber" readonly="true" name="contactnumber" formControlName="contactnumber" placeholder="Contact Number">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput id="nic" readonly="true" name="nic" [(ngModel)]="nic" formControlName="nic" placeholder="NIC Number">
+                            </mat-form-field>
+
+
+
+                        </div>
+
+                        <div class="col-md-6 cardWidget">
+
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker" placeholder="currentdate" readonly="true" id="currentdate" name="currentdate" [(ngModel)]="currentdate" formControlName="currentdate">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker2" placeholder="requireddate" id="requireddate" name="requireddate" [(ngModel)]="requireddate" formControlName="requireddate">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="ponumber" name="ponumber" [(ngModel)]="ponumber" formControlName="ponumber" placeholder="Po Number">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="referenceNo" name="referenceNo" [(ngModel)]="referenceNo" formControlName="referenceNo" placeholder="Reference No">
+                            </mat-form-field>
+
+
+                            <mat-form-field>
+                                <input matInput id="ordertype" name="ordertype" [(ngModel)]="ordertype" formControlName="ordertype" placeholder="Order Type">
+                            </mat-form-field>
+
+
+
+                            <mat-form-field>
+                                <input matInput id="companyVat" readonly="true" name="companyVat" [(ngModel)]="companyVat" formControlName="companyVat" placeholder="Company Vat">
+                            </mat-form-field>
+
+
+                            <mat-form-field>
+                                <input matInput id="companyNbt" readonly="true" name="companyNbt" [(ngModel)]="companyNbt" formControlName="companyNbt" placeholder="Company NBT">
+                            </mat-form-field>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Menual Adding Items </div>
+                                <div class="panel-body">
+
+
+                                    <mat-form-field>
+                                        <mat-select [(value)]="itemMasterId3" placeholder="Item Master" id="itemMasterId" name="itemMasterId" (ngModelChange)="itemChange($event)" [(ngModel)]="itemMasterId" formControlName="itemMasterId">
+                                            <mat-option *ngFor="let jack of this.allitemMasterOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput id="requiredQuantity" (ngModelChange)="qtyChange($event)" name="requiredQuantity" [(ngModel)]="requiredQuantity" formControlName="requiredQuantity" placeholder="Required Quantity">
+                                    </mat-form-field>
+
+
+                                    <div class="button-footer">
+                                        <div class="button-row">
+                                            <button mat-raised-button color="primary" [disabled]="activemanualAdd||additional" type="button" (click)="PushToArray(itemMasterId,requiredQuantity)">Add To Cart</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-footer">
+                        <div class="button-row">
+
+                            <button mat-raised-button color="primary" type="button" [disabled]="orderConfirm" (click)="jack()">Confirm Invoice</button>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="col-md-6">
+            <div class="col-md-12 cardWidget">
+
+                <div class="box-header with-border">
+                    <h3 class="box-title">Invoice Item Cart</h3>
+                </div>
+
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                        <mat-table #table [dataSource]="dataSource">
+
+
+                            <!--   <ng-container matColumnDef="itemStatus">
+                                <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.itemStatus}} </mat-cell>
+                            </ng-container>-->
+
+
+                            <ng-container matColumnDef="itemcode">
+                                <mat-header-cell *matHeaderCellDef> Item</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.itemcode}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="requiredQuantity">
+                                <mat-header-cell *matHeaderCellDef> QTY</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.requiredQuantity}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="requiedDate">
+                                <mat-header-cell *matHeaderCellDef>Req Date</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.requiedDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="itemDiscount">
+                                <mat-header-cell *matHeaderCellDef> Disc</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.itemDiscount}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="total">
+                                <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.total}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="specialDiscount">
+                                <mat-header-cell *matHeaderCellDef>Spe Disc</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.specialDiscount}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="specialPrice">
+                                <mat-header-cell *matHeaderCellDef>Spe Price</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.specialPrice}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="netPrice">
+                                <mat-header-cell *matHeaderCellDef> Net Price </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.netPrice}} </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+
+
+                    </div>
+                </div>
+                <div class="box-header with-border">
+                    <h3 class="box-title">Invoice Free Issues</h3>
+                </div>
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                        <mat-table #table [dataSource]="dataSource2">
+
+                            <!--- Note that these columns can be defined in any order.
+                                          The actual rendered columns are set as a property on the row definition" -->
+
+                            <!-- Position Column -->
+                            <!--  <ng-container matColumnDef="genaratedId">
+                                        <mat-header-cell *matHeaderCellDef> Order Id </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.genaratedId}} </mat-cell>
+                                    </ng-container>-->
+
+
+
+                            <ng-container matColumnDef="purchasedItemcode">
+                                <mat-header-cell *matHeaderCellDef>Selected Item </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.purchasedItemcode}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="purchasedItemQuantity">
+                                <mat-header-cell *matHeaderCellDef> pur. Quantity</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.purchasedItemQuantity}} </mat-cell>
+                            </ng-container>
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="FreeIssueItemcode">
+                                <mat-header-cell *matHeaderCellDef>FreeIssue Item</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.FreeIssueItemcode}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="FreeIssueItemQuantity">
+                                <mat-header-cell *matHeaderCellDef> FreeIssue QTY </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.FreeIssueItemQuantity}} </mat-cell>
+                            </ng-container>
+
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
+                        </mat-table>
+
+
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6 cardWidget">
+
+                        <mat-form-field>
+                            <input matInput id="totalPrice" name="totalPrice" (ngModelChange)="changetot1($event)" readonly="true" [ngModel]="selected?.totalPrice" formControlName="totalPrice" placeholder="Total Price">
+                        </mat-form-field>
+
+
+                        <mat-form-field>
+                            <input matInput id="discountPrice" name="discountPrice" (ngModelChange)="changetot2($event)" readonly="true" [ngModel]="selected?.discountPrice" formControlName="discountPrice" placeholder="Item Discount Price">
+                        </mat-form-field>
+
+
+                    </div>
+                    <div class="col-md-6 cardWidget">
+
+
+                        <mat-form-field>
+                            <input matInput id="wholesaleDiscount" name="wholesaleDiscount" (ngModelChange)="changetot3($event)" readonly="true" [ngModel]="selected?.wholesaleDiscount" formControlName="wholesaleDiscount" placeholder="wholesale Discount">
+                        </mat-form-field>
+
+
+                        <mat-form-field>
+                            <input matInput id="netTotal" name="netTotal" readonly="true" (ngModelChange)="changetot4($event)" [ngModel]="selected?.netTotal" formControlName="netTotal" placeholder="Net Total">
+                        </mat-form-field>
+
+
+                    </div>
+
+                </div>
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="button-footer">
+                            <div class="button-row">
+                                <button mat-raised-button color="primary" type="button" [disabled]="saveConfirm" (click)="saveInvoice(referenceNo)">Apply Items</button>
+                                <button mat-raised-button color="primary" type="button" [disabled]="saveConfirm2" (click)=" SellingFreeIsues()">Apply Free Issues</button>
+                                <button mat-raised-button color="primary" type="button" [disabled]="saveConfirm3" (click)="jackt()">Save</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Invoice</h3>
+                        </div>
+                        <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                            <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                            <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                        </div>
+                        <p-dataTable [value]="alldata" [rows]="5" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+
+                            <p-column field="genaratedId" header="Invoice NO" [sortable]="true"></p-column>
+                            <p-column field="itemStatus" header="Item Type" [sortable]="true"></p-column>
+                            <p-column field="itemMaster.itemCode" header="Item" [sortable]="true"></p-column>
+                            <p-column field="batchNumber" header="Batch Number" [sortable]="true"></p-column>
+                            <p-column field="quantity" header="Quantity" [sortable]="true"></p-column>
+
+                        </p-dataTable>
+
+                        <div class="button-footer">
+                            <div class="button-row">
+                            </div>
+                        </div>
+
+                        <div class="button-footer">
+                            <div class="button-row">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</section>

@@ -1,0 +1,458 @@
+<section class="content-header">
+    <h3>
+        Manage Item Master
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Manage Item Master</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <form [formGroup]="myForm" (ngSubmit)="saveOrEdit(myForm.value)">
+
+
+        <div class="col-md-6">
+
+            <div class="col-md-12 cardWidget">
+
+
+                <div class="widget-comp row">
+                    <div class="col-md-6 cardWidget" [hidden]="true">
+                        <mat-form-field>
+                            <input matInput id="id" name="id" (ngModelChange)="SetCombo($event,selected?.mainCatagoryId,selected?.subCatagoryId,selected?.subSubCatagoryId)" [ngModel]="selected?.id" formControlName="id" value="{{selected != null && selected.id != 0 ? selected.id:''}}"
+                                placeholder="Area Id">
+                        </mat-form-field>
+                    </div>
+                    <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                        <div class="widget-header-button-comp pull-right">
+                            <div class="button-row">
+                                <button mat-icon-button type="submit" [disabled]=" !(selected != null && selected.id != 0) || !(myForm.valid ) ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                <button mat-icon-button type="button" (click)="convert()">
+        <mat-icon>print</mat-icon>
+      </button>
+
+                                <button mat-icon-button type="button" (click)="addNew()">
+        <mat-icon>add</mat-icon>
+      </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="col-md-6 cardWidget">
+                            <mat-form-field>
+                                <input matInput id="genaratedId" name="genaratedId" (ngModelChange)="GenIdChange($event)" [ngModel]="selected?.genaratedId" readonly="true" formControlName="genaratedId" value="{{selected != null && selected.genaratedId != 0 ? selected.genaratedId:''}}"
+                                    placeholder="Item Id">
+                            </mat-form-field>
+
+
+                            <mat-form-field>
+                                <mat-select [(value)]="mainCatagoryId1" (ngModelChange)="MainCatagoryChange($event)" [ngModel]="selected?.mainCatagoryId" placeholder="Main Catagory" id="mainCatagoryId" name="mainCatagoryId" formControlName="mainCatagoryId">
+                                    <mat-option *ngFor="let jack of this.allMainCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-select [(value)]="subCatagoryId1" (ngModelChange)="SubCatagoryChange($event)" [ngModel]="selected?.subCatagoryId" placeholder="Sub Catagory" id="subCatagoryId" name="subCatagoryId" formControlName="subCatagoryId">
+                                    <mat-option *ngFor="let jack of this.allSubCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-select [(value)]="subSubCatagoryId1" [ngModel]="selected?.subSubCatagoryId" placeholder="Sub Sub Catagory" id="subSubCatagoryId" name="subSubCatagoryId" formControlName="subSubCatagoryId">
+                                    <mat-option *ngFor="let jack of this.allSubSubCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="averageCost" name="averageCost" [ngModel]="selected?.averageCost" formControlName="averageCost" value="{{selected != null && selected.averageCost != 0 ? selected.averageCost:''}}" placeholder="Average Cost">
+                                </mat-form-field>
+                            </div>
+
+                            <div [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="currentBalance" name="currentBalance" [ngModel]="selected?.currentBalance" formControlName="currentBalance" value="{{selected != null && selected.currentBalance != 0 ? selected.currentBalance:''}}" placeholder="Current Balance">
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <mat-form-field>
+                                <input matInput id="maxRetail" name="maxRetail" [ngModel]="selected?.maxRetail" formControlName="maxRetail" value="{{selected != null && selected.maxRetail != 0 ? selected.maxRetail:''}}" placeholder="max Retail Price">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="creditPrice" name="creditPrice" [ngModel]="selected?.creditPrice" formControlName="creditPrice" value="{{selected != null && selected.creditPrice != 0 ? selected.creditPrice:''}}" placeholder="creditPrice">
+                            </mat-form-field>
+
+
+                            <div class="form-group" [hidden]="Rowmetarial&&FinishGood">
+
+                                <mat-form-field>
+                                    <input matInput id="cashPrice" name="cashPrice" [ngModel]="selected?.cashPrice" formControlName="cashPrice" value="{{selected != null && selected.cashPrice != 0 ? selected.cashPrice:''}}" placeholder="cashPrice">
+                                </mat-form-field>
+
+                                <mat-form-field>
+                                    <input matInput id="discount" name="discount" [ngModel]="selected?.discount" formControlName="discount" value="{{selected != null && selected.discount != 0 ? selected.discount:''}}" placeholder="Discount">
+                                </mat-form-field>
+
+
+                                <mat-form-field>
+                                    <input matInput id="maxCreditDays" name="maxCreditDays" [ngModel]="selected?.maxCreditDays" formControlName="maxCreditDays" value="{{selected != null && selected.maxCreditDays != 0 ? selected.maxCreditDays:''}}" placeholder="Max Credit Days">
+                                </mat-form-field>
+
+
+                            </div>
+                            <div class="form-group" [hidden]="Rowmetarial">
+
+                                <mat-form-field>
+                                    <input matInput id="leadTime" name="leadTime" [ngModel]="selected?.leadTime" formControlName="leadTime" value="{{selected != null && selected.leadTime != 0 ? selected.leadTime:''}}" placeholder="Lead Time">
+                                </mat-form-field>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-6 cardWidget">
+
+                            <mat-form-field>
+                                <input matInput id="itemCode" name="itemCode" [ngModel]="selected?.itemCode" formControlName="itemCode" value="{{selected != null && selected.itemCode != 0 ? selected.itemCode:''}}" placeholder="Item Code">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="secreteCode" name="secreteCode" [ngModel]="selected?.secreteCode" formControlName="secreteCode" value="{{selected != null && selected.secreteCode != 0 ? selected.secreteCode:''}}" placeholder="Secrete Code">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="discription" name="discription" [ngModel]="selected?.discription" formControlName="discription" value="{{selected != null && selected.discription != 0 ? selected.discription:''}}" placeholder="Discription">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="hsCode" name="hsCode" [ngModel]="selected?.hsCode" formControlName="hsCode" value="{{selected != null && selected.hsCode != 0 ? selected.hsCode:''}}" placeholder="HS Code">
+                            </mat-form-field>
+
+                            <div [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="unit" name="unit" [ngModel]="selected?.unit" formControlName="unit" value="{{selected != null && selected.unit != 0 ? selected.unit:''}}" placeholder="unit">
+                                </mat-form-field>
+                            </div>
+
+                            <mat-form-field>
+                                <input matInput id="maxLevel" name="maxLevel" [ngModel]="selected?.maxLevel" formControlName="maxLevel" value="{{selected != null && selected.maxLevel != 0 ? selected.maxLevel:''}}" placeholder="Max Level">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="minLevel" name="minLevel" [ngModel]="selected?.minLevel" formControlName="minLevel" value="{{selected != null && selected.minLevel != 0 ? selected.minLevel:''}}" placeholder="Min Level">
+                            </mat-form-field>
+
+
+                            <div [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="lastPerchQuantity" name="lastPerchQuantity" [ngModel]="selected?.lastPerchQuantity" formControlName="lastPerchQuantity" value="{{selected != null && selected.lastPerchQuantity != 0 ? selected.lastPerchQuantity:''}}" placeholder="last Perch Quantity">
+                                </mat-form-field>
+
+                                <mat-form-field>
+                                    <input matInput id="lastPerchPrice" name="lastPerchPrice" [ngModel]="selected?.lastPerchPrice" formControlName="lastPerchPrice" value="{{selected != null && selected.lastPerchPrice != 0 ? selected.lastPerchPrice:''}}" placeholder="Last Perch Price">
+                                </mat-form-field>
+
+                            </div>
+
+
+
+
+
+                            <div [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="wholeSalePrice" name="wholeSalePrice" [ngModel]="selected?.wholeSalePrice" formControlName="wholeSalePrice" value="{{selected != null && selected.wholeSalePrice != 0 ? selected.wholeSalePrice:''}}" placeholder="whole SalePrice">
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group" [hidden]="Rowmetarial">
+
+                                <mat-form-field>
+                                    <input matInput id="reOrderLevel" name="reOrderLevel" [ngModel]="selected?.reOrderLevel" formControlName="reOrderLevel" value="{{selected != null && selected.reOrderLevel != 0 ? selected.reOrderLevel:''}}" placeholder="reOrder Level">
+                                </mat-form-field>
+
+                                <mat-form-field>
+                                    <input matInput id="reOrderQuantity" name="reOrderQuantity" [ngModel]="selected?.reOrderQuantity" formControlName="reOrderQuantity" value="{{selected != null && selected.reOrderQuantity != 0 ? selected.reOrderQuantity:''}}" placeholder="Re Order Quantity">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group" [hidden]="Rowmetarial&&FinishGood">
+
+                                <div [hidden]="true">
+                                    <mat-form-field>
+                                        <input matInput id="distributor" name="distributor" [ngModel]="selected?.distributor" formControlName="distributor" value="{{selected != null && selected.distributor != 0 ? selected.distributor:''}}" placeholder="Distributor">
+                                    </mat-form-field>
+                                </div>
+
+                                <mat-form-field>
+                                    <input matInput id="additionalInfo" name="additionalInfo" [ngModel]="selected?.additionalInfo" formControlName="additionalInfo" value="{{selected != null && selected.additionalInfo != 0 ? selected.additionalInfo:''}}" placeholder="Additional Info">
+                                </mat-form-field>
+
+                            </div>
+
+
+                            <div [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="averageCost" name="averageCost" [ngModel]="selected?.averageCost" formControlName="averageCost" value="{{selected != null && selected.averageCost != 0 ? selected.averageCost:''}}" placeholder="Average Cost">
+                                </mat-form-field>
+
+                            </div>
+
+                            <mat-form-field>
+                                <input matInput id="packSize" name="packSize" [ngModel]="selected?.packSize" formControlName="packSize" value="{{selected != null && selected.packSize != 0 ? selected.packSize:''}}" placeholder="Pack Size">
+                            </mat-form-field>
+
+                            <mat-radio-group name="volumeType" formControlName="volumeType" name="volumeType" [(ngModel)]="selected.volumeType" formControlName="volumeType">
+                                <mat-radio-button value="KG">KG</mat-radio-button>
+                                <mat-radio-button value="LTR">LTR</mat-radio-button>
+                                <mat-radio-button value="Unit">Unit</mat-radio-button>
+
+                            </mat-radio-group>
+
+
+                            <mat-form-field>
+                                <input matInput id="volume" name="volume" [ngModel]="selected?.volume" formControlName="volume" value="{{selected != null && selected.volume != 0 ? selected.volume:''}}" placeholder="Volume">
+                            </mat-form-field>
+
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6 cardWidget">
+
+                                <mat-form-field>
+                                    <mat-select [(value)]="qualityparameter" (ngModelChange)="QualityParameterChange($event)" [(ngModel)]="qualityparameter" placeholder="Quality parameter" id="qualityparameter" name="qualityparameter" formControlName="qualityparameter">
+                                        <mat-option *ngFor="let jack of this.allQualityParameterOption" value={{jack.value}}>{{jack.label}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 cardWidget">
+
+                                <mat-form-field>
+                                    <input matInput id="qualityparameterdiscription" name="qualityparameterdiscription" (ngModelChange)="DiscriptionChange($event)" [(ngModel)]="qualityparameterdiscription" formControlName="qualityparameterdiscription" value="{{selected != null && selected.qualityparameterdiscription != 0 ? selected.qualityparameterdiscription:''}}"
+                                        placeholder="Qualityparameter Discription">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="button-footer">
+                                <div class="button-row">
+                                    <button mat-raised-button color="warn" type="button" (click)="deleteDataFromList(selected2)">Delete</button>
+
+                                    <button mat-raised-button color="primary" type="button" (click)="PushToArray(qualityparameter,qualityparameterdiscription)" [disabled]="addToCart2||addToCart">Add to list</button>
+
+
+                                </div>
+
+
+
+                            </div>
+
+                            <!-- <p-dataTable [value]="tepmoryQualityParameters" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected2">
+                                <p-column field="qpname" header="Quality Parameter" [sortable]="true"></p-column>
+                                <p-column field="discription" header="Description" [sortable]="true"></p-column>
+                            </p-dataTable>-->
+
+                            <div class="col-md-12 cardWidget">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">Quality Parameter Cart</h4>
+                                </div>
+                                <div class="widget-comp row">
+                                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                        <mat-table #table [dataSource]="dataSource">
+
+                                            <!--- Note that these columns can be defined in any order.
+                                          The actual rendered columns are set as a property on the row definition" -->
+
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="id">
+                                                <mat-header-cell *matHeaderCellDef>Quality Parameter </mat-header-cell>
+                                                <mat-cell *matCellDef="let element"> {{element.qpname}} </mat-cell>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="discription">
+                                                <mat-header-cell *matHeaderCellDef> QP Discription </mat-header-cell>
+                                                <mat-cell *matCellDef="let element"> {{element.discription}} </mat-cell>
+                                            </ng-container>
+
+
+
+                                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                        </mat-table>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="button-footer">
+                            <div class="button-row">
+                                <button mat-raised-button color="warn" type="button" (click)="deleteById(selected.id)" [disabled]="selected == null || selected.id == 0">Delete</button>
+
+                                <button mat-raised-button color="primary" type="submit" [disabled]="(!myForm.valid ) || (selected != null && selected.id != 0)">Save</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-12 cardWidget">
+
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Items</h3>
+                        </div>
+                        <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                            <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                            <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                        </div>
+                        <p-dataTable [value]="alldata" [rows]="5" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+                            <p-column field="genaratedId" header="Item Code" [sortable]="true"></p-column>
+                            <p-column field="itemCode" header="Item" [sortable]="true"></p-column>
+                            <p-column field="hsCode" header="Hs Code" [sortable]="true"></p-column>
+                        </p-dataTable>
+
+
+
+                        <div class="row">
+                            <div class="box box-info" style="padding: 10px;">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Items Quality Parameters</h3>
+
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb2 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allFiltereditemsqualityparameterdata" [rows]="5" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb2" selectionMode="single" [(selection)]="selectedQP" (onRowUnselect)="addNew2()">
+                                    <p-column field="qualityParameter.qualityParameter" header="Quality Parameter" [sortable]="true"></p-column>
+                                    <p-column field="itemMasterId" header="Item Code" [sortable]="true"></p-column>
+                                    <p-column field="discription" header="Discription" [sortable]="true"></p-column>
+                                </p-dataTable>
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"></h3>
+                                </div>
+
+                                <form class="form-horizontal" [formGroup]="myForm2" (ngSubmit)="SaveOrEdirQualityParameters(myForm2.value)">
+
+                                    <div [hidden]="ItemsQualityParameterChange">
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 cardWidget">
+
+                                                <mat-form-field>
+                                                    <mat-select [(value)]="qualityParameterId2" [ngModel]="selectedQP?.qualityParameterId" placeholder="Quality Parameter" id="qualityParameterId" name="qualityParameterId" formControlName="qualityParameterId">
+                                                        <mat-option *ngFor="let jack of this.allQualityParameterOption" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-md-6 cardWidget">
+
+                                                <mat-form-field>
+                                                    <input matInput id="discription" name="discription" [(ngModel)]="discription" formControlName="discription" value="{{selectedQP != null && selectedQP.discription != 0 ? selectedQP.discription:''}}" placeholder="Qualityparameter Discription">
+                                                </mat-form-field>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 cardWidget">
+
+                                                <mat-form-field>
+                                                    <mat-select [(value)]="itemMasterId33" [ngModel]="selectedQP?.itemMasterId" placeholder="Item Code" id="itemMasterId" name="itemMasterId" formControlName="itemMasterId">
+                                                        <mat-option *ngFor="let jack of this.allItemCodeOption" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+
+
+
+                                            <div class="col-md-6">
+                                                <div [hidden]="true">
+
+                                                    <div class="col-md-6 cardWidget">
+                                                        <mat-form-field>
+                                                            <input matInput id="id" name="id" [ngModel]="selectedQP?.id" formControlName="id" (ngModelChange)="IdChange($event,selectedQP?.qualityParameterId)" value="{{selectedQP != null && selectedQP.id != 0 ? selectedQP.id:''}}" placeholder="id">
+                                                        </mat-form-field>
+                                                    </div>
+
+
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="button-footer">
+                                            <div class="button-row">
+                                                <button mat-raised-button color="warn" type="button" (click)="deleteQualityParameters(selectedQP.id)" [disabled]="(selectedQP?.id==null||selectedQP?.id==0)">Delete</button>
+                                                <button mat-raised-button color="primary" type="button" (click)="addNew3()">Clear</button>
+
+                                                <button mat-raised-button color="primary" type="submit" [disabled]="(selectedQP != null && selectedQP.id != 0)||(!myForm2.valid)">Save</button>
+                                                <button mat-raised-button color="primary" type="submit" [disabled]="!((selectedQP != null && selectedQP.id != 0))||(!myForm2.valid)">Edit</button>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </form>
+
+
+
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </form>
+
+
+</section>

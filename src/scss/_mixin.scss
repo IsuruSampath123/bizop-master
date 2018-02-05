@@ -1,0 +1,115 @@
+
+//#@mixin for shorthand
+//#Rotatating mixin
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+// #rotate
+@mixin rotate($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// #scale
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+// #translate
+@mixin translate($x, $y) {
+  @include transform(translate($x, $y));
+}
+
+// #skew
+@mixin skew($x, $y) {
+  @include transform(skew(#{$x}deg, #{$y}deg));
+}
+
+//#transform origin
+@mixin transform-origin($origin) {
+  moz-transform-origin: $origin;
+  -o-transform-origin: $origin;
+  -ms-transform-origin: $origin;
+  -webkit-transform-origin: $origin;
+  transform-origin: $origin;
+}
+
+// #Border radius shorthand
+@mixin border-radiusk($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+// #box_shadow radius shorthand
+@mixin box_Shadow($top, $left, $blur, $color, $inset) {
+  -webkit-box-shadow: $top $left $blur $color $inset;
+  -moz-box-shadow: $top $left $blur $color $inset;
+  box-shadow: $top $left $blur $color $inset;
+}
+
+@mixin box_ShadowNew($left, $bottom, $all, $blur, $color) {
+  -webkit-box-shadow: $left $bottom $all $blur $color;
+  -moz-box-shadow: $left $bottom $all $blur $color;
+  box-shadow: $left $bottom $all $blur $color;
+}
+
+@mixin box_ShadowNone {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;;
+}
+
+/*-------------------------------------------------
+ MIXIN :: set columns width
+-------------------------------------------------*/
+@mixin setColumnsWith($columns) {
+  width: ((100%/12)*$columns);
+}
+
+@mixin setColumnsHeight($columns) {
+  height: ((100%/12)*$columns);
+}
+
+/*-------------------------------------------------
+ MIXIN :: PIXEL TO REM CONVERTOR
+-------------------------------------------------*/
+$browser-contexts: 16; // Default
+@function remcon($pixels: $browser-contexts) {
+  @return #{$pixels/$browser-contexts}rem
+}
+
+//#transition Animation0.4s
+@mixin transitionS {
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+//#transition Animation0.8s
+@mixin transitionMaxHeight($delayHeight) {
+  -webkit-transition: max-height $delayHeight ease-in-out;
+  -moz-transition: max-height $delayHeight ease-in-out;
+  -ms-transition: max-height $delayHeight ease-in-out;
+  -o-transition: max-height $delayHeight ease-in-out;
+  transition: max-height $delayHeight ease-in-out;
+}
+
+//#transition Animation0.2s
+@mixin transition2s {
+  transition-delay: 0.1s;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+

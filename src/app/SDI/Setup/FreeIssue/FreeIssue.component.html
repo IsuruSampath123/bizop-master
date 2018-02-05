@@ -1,0 +1,533 @@
+<section class="content-header">
+    <h3>
+        Manage Free Issues
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Manage Free Issues</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <mat-tab-group>
+        <mat-tab label="Item Wise Free Issues">
+            <form [formGroup]="myForm" (ngSubmit)="saveOrEdit(myForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" (ngModelChange)="SetCombo($event,selected?.selectedItemId,selected?.freeIssueItemId)" [ngModel]="selected?.id" formControlName="id" value="{{selected != null && selected.id != 0 ? selected.id:''}}" placeholder="Area Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selected != null && selected.id != 0) || !(myForm.valid ) ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                        <button mat-icon-button type="button" (click)="convert()">
+        <mat-icon>print</mat-icon>
+      </button>
+                                        <button mat-icon-button type="button" (click)="addNew()">
+        <mat-icon>add</mat-icon>
+      </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <input matInput id="genaratedId" readonly="true" name="genaratedId" [ngModel]="selected?.genaratedId" formControlName="genaratedId" value="{{selected != null && selected.genaratedId != 0 ? selected.genaratedId:''}}" placeholder="Item Wise Free Issue Id">
+                                        </mat-form-field>
+
+
+                                        <mat-radio-group name="manuchange" [(ngModel)]="manuchange" (ngModelChange)="OptionChange($event)" formControlName="manuchange">
+                                            <mat-radio-button value="1">Item Code</mat-radio-button>
+                                            <mat-radio-button value="0">Catagory</mat-radio-button>
+                                        </mat-radio-group>
+
+                                        <div [hidden]="CatagoryChange">
+
+                                            <mat-form-field>
+                                                <mat-select [value]="mainCatagoryId" (ngModelChange)="MainCatagoryChange($event)" [ngModel]="selected?.mainCatagoryId" placeholder="MainCatagory" id="mainCatagoryId" name="mainCatagoryId" formControlName="mainCatagoryId">
+                                                    <mat-option *ngFor="let jack of this.allMainCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field>
+                                                <mat-select [value]="subCatagoryId" (ngModelChange)="SubCatagoryChange($event)" [ngModel]="selected?.subCatagoryId" placeholder="Sub Catagory" id="subCatagoryId" name="subCatagoryId" formControlName="subCatagoryId">
+                                                    <mat-option *ngFor="let jack of  this.allSubCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field>
+                                                <mat-select [value]="subSubCatagoryId" (ngModelChange)="SubSubCatagoryChange($event)" [ngModel]="selected?.subSubCatagoryId" placeholder="Sub Sub Catagory" id="subSubCatagoryId" name="subSubCatagoryId" formControlName="subSubCatagoryId">
+                                                    <mat-option *ngFor="let jack of   this.allSubSubCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                        </div>
+                                        <mat-form-field>
+                                            <mat-select [value]="selectedItemId1" [ngModel]="selected?.selectedItemId" (ngModelChange)="getItem($event)" placeholder="Item Code" id="selectedItemId" name="selectedItemId" formControlName="selectedItemId">
+                                                <mat-option *ngFor="let jack of this.allItemsOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="itemQuantity" name="itemQuantity" [ngModel]="selected?.itemQuantity" formControlName="itemQuantity" value="{{selected != null && selected.itemQuantity != 0 ? selected.itemQuantity:''}}" placeholder="Item Quantity">
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div class="col-md-6 cardWidget">
+
+
+                                        <mat-radio-group name="manuchange2" [(ngModel)]="manuchange2" (ngModelChange)="OptionChange2($event)" formControlName="manuchange2">
+                                            <mat-radio-button value="1">Item Code</mat-radio-button>
+                                            <mat-radio-button value="0">Catagory</mat-radio-button>
+                                        </mat-radio-group>
+
+                                        <div [hidden]="CatagoryChange2">
+
+                                            <mat-form-field>
+                                                <mat-select [value]="mainCatagoryId" (ngModelChange)="MainCatagoryChange2($event)" [ngModel]="selected?.mainCatagoryId" placeholder="MainCatagory" id="mainCatagoryId" name="mainCatagoryId" formControlName="mainCatagoryId">
+                                                    <mat-option *ngFor="let jack of this.allMainCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field>
+                                                <mat-select [value]="subCatagoryId" (ngModelChange)="SubCatagoryChange2($event)" [ngModel]="selected?.subCatagoryId" placeholder="Sub Catagory" id="subCatagoryId" name="subCatagoryId" formControlName="subCatagoryId">
+                                                    <mat-option *ngFor="let jack of  this.allSubCatagoryOptions2" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field>
+                                                <mat-select [value]="subSubCatagoryId" (ngModelChange)="SubSubCatagoryChange2($event)" [ngModel]="selected?.subSubCatagoryId" placeholder="Sub Sub Catagory" id="subSubCatagoryId" name="subSubCatagoryId" formControlName="subSubCatagoryId">
+                                                    <mat-option *ngFor="let jack of   this.allSubSubCatagoryOptions2" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                        </div>
+                                        <mat-form-field>
+                                            <mat-select [value]="freeIssueItemId1" [ngModel]="selected?.freeIssueItemId" placeholder="Item Code" id="freeIssueItemId" name="freeIssueItemId" formControlName="freeIssueItemId">
+                                                <mat-option *ngFor="let jack of    this.allItemsOptions2" value={{jack.value}}>{{jack.label}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="freeIssueQuantity" name="freeIssueQuantity" [ngModel]="selected?.freeIssueQuantity" formControlName="freeIssueQuantity" value="{{selected != null && selected.itemQuantity != 0 ? selected.itemQuantity:''}}" placeholder="Free Issue Quantity">
+                                        </mat-form-field>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteById(selected.id)" [disabled]="selected == null || selected.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!myForm.valid ) || (selected != null && selected.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Item Wise Free Issue</h3>
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="alldata" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+                                    <p-column field="itemMaster.itemCode" header="Item Name" [sortable]="true"></p-column>
+                                    <p-column field="itemQuantity" header="Quantity" [sortable]="true"></p-column>
+                                    <p-column field="itemMaster2.itemCode" header="Free Issue Item Name" [sortable]="true"></p-column>
+                                    <p-column field="freeIssueQuantity" header="Free Issue Item Quantity" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+        </mat-tab>
+
+
+        <mat-tab label="Catagory wise Free Issue">
+
+            <form [formGroup]="myForm2" (ngSubmit)="saveOrEdit2(myForm2.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" (ngModelChange)="SetCombo2($event,selected2?.selectedCatagoryId,selected2?.freeIssueItemId)" [ngModel]="selected2?.id" formControlName="id" value="{{selected2 != null && selected2.id != 0 ? selected2.id:''}}" placeholder="Area Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selected2 != null && selected2.id != 0) || !(myForm2.valid ) ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                        <button mat-icon-button type="button" (click)="convert2()">
+        <mat-icon>print</mat-icon>
+      </button>
+                                        <button mat-icon-button type="button" (click)="addNew2()">
+        <mat-icon>add</mat-icon>
+      </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <input matInput id="genaratedId" readonly="true" name="genaratedId" [ngModel]="selected2?.genaratedId" formControlName="genaratedId" value="{{selected2 != null && selected2.genaratedId != 0 ? selected2.genaratedId:''}}" placeholder="Catagory Free Issue  ID">
+                                        </mat-form-field>
+
+
+
+
+
+                                        <mat-form-field>
+                                            <mat-select [value]="selectedCatagoryId1" [ngModel]="selected2?.selectedCatagoryId" (ngModelChange)="getCatagory1($event)" placeholder="Catagory" id="selectedCatagoryId" name="selectedCatagoryId" formControlName="selectedCatagoryId">
+                                                <mat-option *ngFor="let jack of this.allMainCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="packSize" name="packSize" [ngModel]="selected2?.packSize" formControlName="packSize" value="{{selected2 != null && selected2.packSize != 0 ? selected2.packSize:''}}" placeholder="Pack Size">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="itemQuantity" name="itemQuantity" [ngModel]="selected2?.itemQuantity" formControlName="itemQuantity" value="{{selected2 != null && selected2.itemQuantity != 0 ? selected2.itemQuantity:''}}" placeholder="Item Quantity">
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div class="col-md-6 cardWidget">
+
+
+                                        <mat-radio-group name="manuchange2" [(ngModel)]="manuchange3" (ngModelChange)="OptionChange3($event)" formControlName="manuchange3">
+                                            <mat-radio-button value="1">Item Code</mat-radio-button>
+                                            <mat-radio-button value="0">Catagory</mat-radio-button>
+                                        </mat-radio-group>
+
+                                        <div [hidden]="CatagoryChange3">
+
+                                            <mat-form-field>
+                                                <mat-select [value]="mainCatagoryId" (ngModelChange)="MainCatagoryChange3($event)" [ngModel]="selected2?.mainCatagoryId" placeholder="MainCatagory" id="mainCatagoryId" name="mainCatagoryId" formControlName="mainCatagoryId">
+                                                    <mat-option *ngFor="let jack of this.allMainCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field>
+                                                <mat-select [value]="subCatagoryId" (ngModelChange)="SubCatagoryChange3($event)" [ngModel]="selected2?.subCatagoryId" placeholder="Sub Catagory" id="subCatagoryId" name="subCatagoryId" formControlName="subCatagoryId">
+                                                    <mat-option *ngFor="let jack of  this.allSubCatagoryOptions3" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field>
+                                                <mat-select [value]="subSubCatagoryId" (ngModelChange)="SubSubCatagoryChange3($event)" [ngModel]="selected2?.subSubCatagoryId" placeholder="Sub Sub Catagory" id="subSubCatagoryId" name="subSubCatagoryId" formControlName="subSubCatagoryId">
+                                                    <mat-option *ngFor="let jack of   this.allSubSubCatagoryOptions3" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                        </div>
+                                        <mat-form-field>
+                                            <mat-select [value]="freeIssueItemId2" [ngModel]="selected2?.freeIssueItemId" placeholder="Item Code" id="freeIssueItemId" name="freeIssueItemId" formControlName="freeIssueItemId">
+                                                <mat-option *ngFor="let jack of    this.allItemsOptions3" value={{jack.value}}>{{jack.label}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="freeIssueQuantity" name="freeIssueQuantity" formControlName="freeIssueQuantity" value="{{selected2 ? selected2.freeIssueQuantity:''}}" [ngModel]="selected2?.freeIssueQuantity" placeholder="Free Issue Quantity">
+                                        </mat-form-field>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteById2(selected2.id)" [disabled]="selected2== null || selected2.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]=" (selected2 != null && selected2.id != 0)||(!myForm2.valid)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Caatagory Wise Free Issue</h3>
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb2 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="alldata2" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb2" selectionMode="single" [(selection)]="selected2">
+                                    <p-column field="mainCatagory.mainCatagoryName" header="Catagory" [sortable]="true"></p-column>
+                                    <p-column field="packSize" header="packSize" [sortable]="true"></p-column>
+                                    <p-column field="itemQuantity" header="Quantity" [sortable]="true"></p-column>
+                                    <p-column field="itemMaster2.itemCode" header="Free Issue Item Name" [sortable]="true"></p-column>
+                                    <p-column field="freeIssueQuantity" header="Free Issue Item Quantity" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+        </mat-tab>
+        <mat-tab label="Volume wise Free Issue">
+
+
+
+            <form [formGroup]="myForm3" (ngSubmit)="saveOrEdit3(myForm3.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" (ngModelChange)="SetCombo3($event,selected3?.selectedCatagoryId,selected3?.freeIssueItemId)" [ngModel]="selected3?.id" formControlName="id" value="{{selected3 != null && selected3.id != 0 ? selected3.id:''}}" placeholder="Area Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selected3 != null && selected3.id != 0) || !(myForm3.valid ) ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                        <button mat-icon-button type="button" (click)="convert3()">
+        <mat-icon>print</mat-icon>
+      </button>
+                                        <button mat-icon-button type="button" (click)="addNew3()">
+        <mat-icon>add</mat-icon>
+      </button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <input matInput id="genaratedId" readonly="true" name="genaratedId" [ngModel]="selected3?.genaratedId" formControlName="genaratedId" value="{{selected3 != null && selected3.genaratedId != 0 ? selected3.genaratedId:''}}" placeholder="Volume Wise Free Issue  ID">
+                                        </mat-form-field>
+
+
+
+
+
+                                        <mat-form-field>
+                                            <mat-select [value]="selectedCatagoryId3" (ngModelChange)="getCatagory2($event)" [ngModel]="selected3?.selectedCatagoryId" placeholder="Main Catagory" id="selectedCatagoryId" name="selectedCatagoryId" formControlName="selectedCatagoryId">
+                                                <mat-option *ngFor="let jack of this.allMainCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-radio-group name="volumeType" formControlName="volumeType" name="volumeType" [(ngModel)]="selected3.volumeType" formControlName="volumeType">
+                                            <mat-radio-button value="KG">KG</mat-radio-button>
+                                            <mat-radio-button value="LTR">LTR</mat-radio-button>
+                                            <mat-radio-button value="Unit">Unit</mat-radio-button>
+
+                                        </mat-radio-group>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="volume" name="volume" [ngModel]="selected3?.volume" formControlName="volume" value="{{selected3 != null && selected3.volume != 0 ? selected3.volume:''}}" placeholder="Volume">
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div class="col-md-6 cardWidget">
+
+
+                                        <mat-radio-group name="manuchange4" [(ngModel)]="manuchange4" (ngModelChange)="OptionChange4($event)" formControlName="manuchange4">
+                                            <mat-radio-button value="1">Item Code</mat-radio-button>
+                                            <mat-radio-button value="0">Catagory</mat-radio-button>
+                                        </mat-radio-group>
+
+                                        <div [hidden]="CatagoryChange4">
+
+                                            <mat-form-field>
+                                                <mat-select [value]="mainCatagoryId" (ngModelChange)="MainCatagoryChange4($event)" [ngModel]="selected2?.mainCatagoryId" placeholder="MainCatagory" id="mainCatagoryId" name="mainCatagoryId" formControlName="mainCatagoryId">
+                                                    <mat-option *ngFor="let jack of this.allMainCatagoryOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field>
+                                                <mat-select [value]="subCatagoryId" (ngModelChange)="SubCatagoryChange4($event)" [ngModel]="selected4?.subCatagoryId" placeholder="Sub Catagory" id="subCatagoryId" name="subCatagoryId" formControlName="subCatagoryId">
+                                                    <mat-option *ngFor="let jack of  this.allSubCatagoryOptions4" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field>
+                                                <mat-select [value]="subSubCatagoryId" (ngModelChange)="SubSubCatagoryChange4($event)" [ngModel]="selected4?.subSubCatagoryId" placeholder="Sub Sub Catagory" id="subSubCatagoryId" name="subSubCatagoryId" formControlName="subSubCatagoryId">
+                                                    <mat-option *ngFor="let jack of   this.allSubSubCatagoryOptions4" value={{jack.value}}>{{jack.label}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                        </div>
+                                        <mat-form-field>
+                                            <mat-select [value]="freeIssueItemId3" [ngModel]="selected3?.freeIssueItemId" placeholder="Item Code" id="freeIssueItemId" name="freeIssueItemId" formControlName="freeIssueItemId">
+                                                <mat-option *ngFor="let jack of    this.allItemsOptions4" value={{jack.value}}>{{jack.label}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="freeIssueQuantity" name="freeIssueQuantity" [ngModel]="selected3?.freeIssueQuantity" formControlName="freeIssueQuantity" value="{{selected3 != null && selected3.itemQuantity != 0 ? selected3.itemQuantity:''}}" placeholder="Free Issue Quantity">
+                                        </mat-form-field>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteById3(selected3.id)" [disabled]="selected3== null || selected3.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="((selected3 != null && selected3.id != 0)|| !(myForm3.valid ))">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Volume Wise Free Issue</h3>
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb3 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="alldata3" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb3" selectionMode="single" [(selection)]="selected3" (onRowUnselect)="addNew3()">
+                                    <p-column field="mainCatagory.mainCatagoryName" header="Catagory" [sortable]="true"></p-column>
+                                    <p-column field="volumeType" header="Volume Type" [sortable]="true"></p-column>
+                                    <p-column field="volume" header="Volume" [sortable]="true"></p-column>
+                                    <p-column field="itemMaster2.itemCode" header="Free Issue Item Name" [sortable]="true"></p-column>
+                                    <p-column field="freeIssueQuantity" header="Free Issue Item Quantity" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+
+
+
+
+
+
+        </mat-tab>
+    </mat-tab-group>
+
+
+
+
+</section>

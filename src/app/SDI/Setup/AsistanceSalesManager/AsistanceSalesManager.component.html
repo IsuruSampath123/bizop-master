@@ -1,0 +1,125 @@
+<section class="content-header">
+    <h3>
+        Manage Asistance Sales Manager
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"> Manage Asistance Sales Manager</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <form [formGroup]="myForm" (ngSubmit)="saveOrEdit(myForm.value)">
+
+        <p-growl [(value)]="msgs"></p-growl>
+
+        <div class="col-md-6">
+
+            <div class="col-md-12 cardWidget">
+
+
+                <div class="widget-comp row">
+                    <div class="col-md-6 cardWidget" [hidden]="true">
+                        <mat-form-field>
+                            <input matInput id="id" name="id" [ngModel]="selected?.id" formControlName="id" value="{{selected != null && selected.id != 0 ? selected.id:''}}" placeholder="Area Id">
+                        </mat-form-field>
+                    </div>
+                    <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                        <div class="widget-header-button-comp pull-right">
+                            <div class="button-row">
+                                <button mat-icon-button type="submit" [disabled]=" !(selected != null && selected.id != 0) || !(myForm.valid ) ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                <button mat-icon-button type="button" (click)="convert()">
+        <mat-icon>print</mat-icon>
+      </button>
+
+                                <button mat-icon-button type="button" (click)="addNew()">
+        <mat-icon>add</mat-icon>
+      </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="col-md-6 cardWidget">
+                            <mat-form-field>
+                                <input matInput id="genaratedId" name="genaratedId" [ngModel]="selected?.genaratedId" readonly="true" formControlName="genaratedId" value="{{selected != null && selected.genaratedId != 0 ? selected.genaratedId:''}}" placeholder="Sales Manager Id">
+                            </mat-form-field>
+
+
+
+                            <mat-form-field>
+                                <input matInput id="addressLine1" name="addressLine1" [ngModel]="selected?.addressLine1" formControlName="addressLine1" value="{{selected != null && selected.addressLine1 != 0 ? selected.addressLine1:''}}" placeholder="Address Line 1">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput id="addressLine2" name="addressLine2" [ngModel]="selected?.addressLine2" formControlName="addressLine2" value="{{selected != null && selected.addressLine2 != 0 ? selected.addressLine2:''}}" placeholder="Address Line 2">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="addressLine3" name="addressLine3" [ngModel]="selected?.addressLine3" formControlName="addressLine3" value="{{selected != null && selected.addressLine3 != 0 ? selected.addressLine3:''}}" placeholder="Address Line 3">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput id="addressLine4" name="addressLine4" [ngModel]="selected?.addressLine4" formControlName="addressLine4" value="{{selected != null && selected.addressLine4 != 0 ? selected.addressLine4:''}}" placeholder="Address Line 4">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-6 cardWidget">
+
+                            <mat-form-field>
+                                <input matInput id="asistanceSalesManagerName" name="asistanceSalesManagerName" [ngModel]="selected?.asistanceSalesManagerName" formControlName="asistanceSalesManagerName" value="{{selected != null && selected.asistanceSalesManagerName != 0 ? selected.asistanceSalesManagerName:''}}"
+                                    placeholder=" Name">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput id="contactNumber" name="contactNumber" [ngModel]="selected?.contactNumber" formControlName="contactNumber" value="{{selected != null && selected.contactNumber != 0 ? selected.contactNumber:''}}" placeholder="Contact Number">
+                            </mat-form-field>
+
+
+
+                        </div>
+                        <div class="button-footer">
+                            <div class="button-row">
+                                <button mat-raised-button color="warn" type="button" (click)="deleteById(selected.id)" [disabled]="selected == null || selected.id == 0">Delete</button>
+
+                                <button mat-raised-button color="primary" type="submit" [disabled]="(!myForm.valid ) || (selected != null && selected.id != 0)">Save</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-12 cardWidget">
+
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Asistance Sales Manager Details</h3>
+                        </div>
+                        <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                            <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                            <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                        </div>
+                        <p-dataTable [value]="alldata" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+                            <p-column field="genaratedId" header=" Asistance Sales manager Id" [sortable]="true"></p-column>
+                            <p-column field="asistanceSalesManagerName" header="Name" [sortable]="true"></p-column>
+                        </p-dataTable>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</section>

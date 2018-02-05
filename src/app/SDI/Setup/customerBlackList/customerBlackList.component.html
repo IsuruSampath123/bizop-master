@@ -1,0 +1,117 @@
+<section class="content-header">
+    <h3>
+        Manage Blacklisting Customers
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"> Manage Blacklisting Customers</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <form [formGroup]="customerBlacklistForm" (ngSubmit)="saveOrEdit(customerBlacklistForm.value)">
+
+
+
+        <div class="col-md-6">
+
+            <div class="col-md-12 cardWidget">
+
+
+                <div class="widget-comp row">
+                    <div class="col-md-6 cardWidget" [hidden]="true">
+                        <mat-form-field>
+                            <input matInput id="id" name="id" [ngModel]="selected?.id" (ngModelChange)="SetCustomerIdCombo()" formControlName="id" value="{{selected != null && selected.id != 0 ? selected.id:''}}" placeholder="Area Id">
+                        </mat-form-field>
+                    </div>
+                    <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                        <div class="widget-header-button-comp pull-right">
+                            <div class="button-row">
+                                <button mat-icon-button type="submit" [disabled]=" !(selected != null && selected.id != 0) || !(customerBlacklistForm.valid ) ">
+      <mat-icon>edit</mat-icon>
+    </button>
+                                <button mat-icon-button type="button" (click)="printBlackListDetails()">
+      <mat-icon>print</mat-icon>
+    </button>
+
+                                <button mat-icon-button type="button" (click)="addNew()">
+      <mat-icon>add</mat-icon>
+    </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="col-md-6 cardWidget">
+                            <mat-form-field>
+                                <mat-select [(value)]="selectedCustomerId" placeholder="Customer" id="id" name="id" [ngModel]="selected?.id" formControlName="id">
+                                    <mat-option *ngFor="let obj of this.allCustomerOptions" value={{obj.value}}>{{obj.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-radio-group placeholder="Customer" [(ngModel)]="selected.blackListed" formControlName="blackListed">
+                                BlackList
+                                <mat-radio-button value="yes">Yes</mat-radio-button>
+                                <mat-radio-button value="no">No</mat-radio-button>
+                            </mat-radio-group>
+
+                        </div>
+
+
+                        <div class="col-md-6 cardWidget">
+                            <mat-form-field>
+                                <textarea matInput placeholder="Autosize textarea" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" id="blackListedReason" name="blackListedReason" formControlName="blackListedReason" placeholder="BlackListed Reason" [ngModel]="selected?.blackListedReason"
+                                    type="text" value="{{selected?  selected.blackListedReason:''}}">
+                              </textarea>
+                            </mat-form-field>
+
+                        </div>
+
+
+                        <div class="button-footer">
+                            <div class="button-row">
+
+                                <button mat-raised-button color="primary" type="submit" [disabled]="(!customerBlacklistForm.valid )">Save</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-12 cardWidget">
+
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Blacklisted Customers</h3>
+                        </div>
+                        <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                            <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                            <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                        </div>
+                        <p-dataTable [value]="allData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+                            <p-column field="customerName" header="Customer Name" [sortable]="true"></p-column>
+                            <p-column field="blackListedReason" header="Black ListedReason" [sortable]="true"></p-column>
+                        </p-dataTable>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</section>

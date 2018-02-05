@@ -1,0 +1,253 @@
+<section class="content-header">
+    <h3>
+        Manage Wholesale Price
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Manage Wholesale Price</li>
+    </ol>
+</section>
+
+<section class="content">
+    <mat-tab-group>
+        <mat-tab label="WholesalePriceType Details">
+
+            <form [formGroup]="myForm" (ngSubmit)="saveOrEditPrice(myForm.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedPrice?.id" formControlName="id" value="{{selectedPrice != null && selectedPrice.id != 0 ? selectedPrice.id:''}}" placeholder="wholesalePriceId Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedPrice != null && selectedPrice.id != 0) || !(myForm.valid ) ">
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                                        <button mat-icon-button type="button" (click)="printPriceDetails()">
+                            <mat-icon>print</mat-icon>
+                          </button>
+                                        <button mat-icon-button type="button" (click)="addNewPrice()">
+                            <mat-icon>add</mat-icon>
+                          </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="genaratedId" name="genaratedId" formControlName="genaratedId" placeholder="Location ID" readonly="true" type="text" [ngModel]="selectedPrice?.genaratedId" value="{{selectedPrice != null && selectedPrice.genaratedId != null ? selectedPrice.genaratedId:''}}">
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="wholesalePriceType" name="wholesalePriceType" formControlName="wholesalePriceType" placeholder="Wholesale Price Type" [ngModel]="selectedPrice?.wholesalePriceType" value="{{selectedPrice != null && selectedPrice.wholesalePriceType  != null ? selectedPrice.wholesalePriceType:''}}"
+                                            />
+                                        </mat-form-field>
+
+
+
+                                    </div>
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <input matInput id="startPrice" name="startPrice" formControlName="startPrice" placeholder="Start Price" [ngModel]="selectedPrice?.startPrice" value="{{selectedPrice != null && selectedPrice.startPrice  != null ? selectedPrice.startPrice:''}}" />
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="endPrice" name="endPrice" formControlName="endPrice" placeholder="End Price" [ngModel]="selectedPrice?.endPrice" value="{{selectedPrice != null && selectedPrice.endPrice  != null ? selectedPrice.endPrice:''}}" />
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <input matInput id="wholesalePrice" name="wholesalePrice" formControlName="wholesalePrice" placeholder="Discount Price" [ngModel]="selectedPrice?.wholesalePrice" value="{{selectedPrice != null && selectedPrice.wholesalePrice  != null ? selectedPrice.wholesalePrice:''}}"
+                                            />
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deletePriceById(selectedPrice.id)" [disabled]="selectedPrice == null || selectedPrice.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]="(!myForm.valid ) || (selectedPrice != null && selectedPrice.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Wholesale Price</h3>
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allPriceData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selectedPrice" (onRowUnselect)="addNewPrice()" >
+                                    <p-column field="genaratedId" header="Wholesale Price Id" [sortable]="true"></p-column>
+                                    <p-column field="wholesalePriceType" header="Wholesale Price Type" [sortable]="true"></p-column>
+                                    <p-column field="startPrice" header="Start Price" [sortable]="true"></p-column>
+                                    <p-column field="endPrice" header="End Price" [sortable]="true"></p-column>
+                                    <p-column field="wholesalePrice" header="Wholesale Price" [sortable]="true"></p-column>
+
+                                </p-dataTable>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </mat-tab>
+
+
+
+        <mat-tab label="Wholesale Items Details">
+
+            <form [formGroup]="myForm1" (ngSubmit)="saveOrEditItem(myForm1.value)">
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selectedItem?.id" (ngModelChange)="setComboValues()" formControlName="id" value="{{selectedItem != null && selectedItem.id != 0 ? selectedItem.id:''}}" placeholder="wholesalePriceId Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+
+
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selectedItem != null && selectedItem.id != 0) || !(myForm1.valid)">
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                                        <button mat-icon-button type="button" (click)="printItemDetails()">
+                            <mat-icon>print</mat-icon>
+                          </button>
+                                        <button mat-icon-button type="button" (click)="addNewItem()">
+                            <mat-icon>add</mat-icon>
+                          </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedPriceId" placeholder="wholesale Price Type" id="wholesalePriceId" name="wholesalePriceId" [ngModel]="selectedItem?.wholesalePriceId" formControlName="wholesalePriceId">
+                                                <mat-option *ngFor="let obj of this.allPriceOption" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+
+
+                                    </div>
+
+                                    <div class="col-md-6 cardWidget">
+                                        <mat-form-field>
+                                            <mat-select [(value)]="selectedItemId" placeholder="Item" id="itemId" name="itemId" [ngModel]="selectedItem?.itemId" formControlName="itemId">
+                                                <mat-option *ngFor="let obj of this.allItemOption" value={{obj.value}}>{{obj.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" (click)="deleteItemById(selectedItem.id)" [disabled]="selectedItem == null || selectedItem.id == 0">Delete</button>
+
+                                        <button mat-raised-button color="primary" type="submit" [disabled]=" (!myForm1.valid ) ||(selectedItem != null && selectedItem.id != 0)">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Wholesale Items</h3>
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="allWholeSaleItemData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selectedItem" (onRowUnselect)="addNewItem()" >
+                                    <p-column field="wholesalePrice.wholesalePriceType" header="Wholesale Price Type" [sortable]="true"></p-column>
+                                    <p-column field="item.itemCode" header="Item" [sortable]="true"></p-column>
+                                </p-dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+        </mat-tab>
+
+
+
+    </mat-tab-group>
+
+</section>

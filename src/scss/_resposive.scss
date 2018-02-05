@@ -1,0 +1,46 @@
+@media (min-width: 991px) {
+  .mat-tab-group.child-left-menu {
+    display: inline-block;
+    width: 100%;
+    .mat-tab-label-container {
+      display: block;
+      min-width: 280px;
+      &:before {
+        content: "";
+        position: relative;
+        width: 100%;
+        height: 40px;
+        padding: 8px;
+        background: darken($lightGray, 3%);
+        border: 1px solid $border;
+        border-top: none;
+        display: block;
+      }
+    }
+    .mat-tab-header {
+      float: left;
+      border-bottom: none;
+      overflow: auto;
+    }
+    .mat-tab-labels {
+      display: block;
+      .mat-tab-label {
+        display: block;
+        line-height: 48px;
+        border-bottom: 1px solid $border;
+      }
+    }
+    .button-footer {
+      margin-top: 26px;
+    }
+    .mat-tab-body-wrapper {
+      border-left: 1px solid $border;
+    }
+  }
+  .mat-ink-bar {
+    display: none;
+  }
+  .mat-tab-label-active {
+    border-bottom: 2px solid lighten($active, 12%);
+  }
+}

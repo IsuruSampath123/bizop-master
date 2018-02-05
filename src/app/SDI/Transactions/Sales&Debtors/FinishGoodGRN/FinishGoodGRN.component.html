@@ -1,0 +1,370 @@
+<mat-tab-group>
+    <mat-tab label=" Manage Finish Good GRN">
+
+        <section class="content-header">
+            <h3>
+                Manage Finish Good GRN
+                <small>Control panel</small>
+            </h3>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active"> Manage Finish Good GRN</li>
+            </ol>
+        </section>
+
+
+        <section class="content">
+            <form [formGroup]="myForm" (ngSubmit)="saveOrEdit(myForm.value)">
+
+
+                <div class="col-md-6">
+
+                    <div class="col-md-12 cardWidget">
+
+
+                        <div class="widget-comp row">
+                            <div class="col-md-6 cardWidget" [hidden]="true">
+                                <mat-form-field>
+                                    <input matInput id="id" name="id" [ngModel]="selected?.id" formControlName="id" value="{{selected != null && selected.id != 0 ? selected.id:''}}" placeholder="Area Id">
+                                </mat-form-field>
+                            </div>
+                            <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+                                    <div class="button-row">
+                                        <button mat-icon-button type="submit" [disabled]=" !(selected != null && selected.id != 0) || !(myForm.valid ) ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                        <button mat-icon-button type="button" (click)="convert()">
+        <mat-icon>print</mat-icon>
+      </button>
+
+                                        <button mat-icon-button type="button" (click)="addNew()">
+        <mat-icon>add</mat-icon>
+      </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                                <div class="col-md-6 cardWidget">
+                                    <mat-form-field>
+                                        <input matInput id="genaratedId" name="genaratedId" [ngModel]="selected?.genaratedId" readonly="true" formControlName="genaratedId" value="{{selected != null && selected.genaratedId != 0 ? selected.genaratedId:''}}" placeholder="GRN No">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <mat-select [(value)]="supplierId" placeholder="Supplier" id="supplierId" name="supplierId" [(ngModel)]="supplierId" formControlName="supplierId">
+                                            <mat-option *ngFor="let jack of this.allSuplierOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+
+                                        </mat-select>
+                                    </mat-form-field>
+
+
+
+                                    <mat-form-field>
+                                        <mat-select [(value)]="storeId" placeholder="Store" id="storeId" name="storeId" [(ngModel)]="storeId" formControlName="storeId">
+                                            <mat-option *ngFor="let jack of this.allstoresOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" placeholder="date" id="date" readonly="true" name="date" [(ngModel)]="date" formControlName="date">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+
+
+
+
+
+
+                                </div>
+
+                                <div class="col-md-6 cardWidget">
+
+                                    <mat-form-field>
+                                        <input matInput id="batchNumber" name="batchNumber" [(ngModel)]="batchNumber" formControlName="batchNumber" value="{{selected != null && selected.batchNumber != 0 ? selected.batchNumber:''}}" placeholder=" Batch Number">
+                                    </mat-form-field>
+
+
+                                    <mat-form-field>
+                                        <input matInput id="price" name="price" [(ngModel)]="price" formControlName="price" value="{{selected != null && selected.price != 0 ? selected.price:''}}" placeholder="Price">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput id="discount" name="discount" [(ngModel)]="discount" formControlName="discount" value="{{selected != null && selected.discount != 0 ? selected.discount:''}}" placeholder="Discount">
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-select [(value)]="itemMasterId" placeholder="itemMasterId" id="itemMasterId" name="itemMasterId" [(ngModel)]="itemMasterId" formControlName="itemMasterId">
+                                            <mat-option *ngFor="let jack of this.allitemMasterOptions" value={{jack.value}}>{{jack.label}}</mat-option>
+
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput id="quantity" name="quantity" [(ngModel)]="quantity" formControlName="quantity" value="{{selected != null && selected.quantity != 0 ? selected.quantity:''}}" placeholder="Quantity">
+                                    </mat-form-field>
+
+                                </div>
+
+                                <div class="button-footer">
+                                    <div class="button-row">
+                                        <button mat-raised-button color="warn" type="button" [disabled]="jackEmpty" (click)="deleteDataFromList(selected2,discount)">Delete</button>
+                                        <button mat-raised-button color="primary" [disabled]="(!myForm.valid)" type="button" (click)="PushToArray(genaratedId,batchNumber,price*quantity,quantity,discount,date,supplierId,storeId,itemMasterId)">Add To Cart</button>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="widget-comp row">
+                                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                        <mat-table #table [dataSource]="dataSource">
+
+                                            <!--- Note that these columns can be defined in any order.
+                                          The actual rendered columns are set as a property on the row definition" -->
+
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="itemcode">
+                                                <mat-header-cell *matHeaderCellDef> Item </mat-header-cell>
+                                                <mat-cell *matCellDef="let element"> {{element.itemcode}} </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="batchNumber">
+                                                <mat-header-cell *matHeaderCellDef> Batch No</mat-header-cell>
+                                                <mat-cell *matCellDef="let element"> {{element.batchNumber}} </mat-cell>
+                                            </ng-container>
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="totprice">
+                                                <mat-header-cell *matHeaderCellDef>Total Price </mat-header-cell>
+                                                <mat-cell *matCellDef="let element"> {{element.totprice}} </mat-cell>
+                                            </ng-container>
+
+
+                                            <ng-container matColumnDef="remainingQuantity">
+                                                <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+                                                <mat-cell *matCellDef="let element"> {{element.remainingQuantity}} </mat-cell>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="discount">
+                                                <mat-header-cell *matHeaderCellDef> Discount </mat-header-cell>
+                                                <mat-cell *matCellDef="let element"> {{element.discount}} </mat-cell>
+                                            </ng-container>
+
+
+                                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                        </mat-table>
+
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+
+                                    <div class="col-md-6 cardWidget">
+                                    </div>
+                                    <div class="col-md-6 cardWidget">
+
+                                        <mat-form-field>
+                                            <input matInput id="total" name="total" readonly="true" [ngModel]="selected?.total" formControlName="total" placeholder="Total">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="discountTotal" name="discountTotal" readonly="true" [ngModel]="selected?.discountTotal" formControlName="discountTotal" placeholder="Discount Total">
+                                        </mat-form-field>
+
+
+                                        <mat-form-field>
+                                            <input matInput id="netPrice" name="netPrice" readonly="true" [ngModel]="selected?.netPrice" formControlName="netPrice" placeholder="Net Total">
+                                        </mat-form-field>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="button-footer">
+                                <div class="button-row">
+                                    <button mat-raised-button color="primary" [disabled]="saveDisable" (click)="saveorEdit()" type="button">Save</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Stock</h3>
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="alldata" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+                                    <p-column field="genaratedId" header="GRN NO" [sortable]="true"></p-column>
+                                    <p-column field="batchNumber" header="Batch Number" [sortable]="true"></p-column>
+                                    <p-column field="itemMaster.itemCode" header="Item" [sortable]="true"></p-column>
+                                    <p-column field="remainingQuantity" header="Quantity" [sortable]="true"></p-column>
+
+
+                                </p-dataTable>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+        </section>
+
+
+
+    </mat-tab>
+    <mat-tab label=" Manage GRN Return Items">
+
+        <form [formGroup]="myForm2">
+
+            <section class="content-header">
+                <h3>
+                    Manage GRN Return Items
+                    <small>Control panel</small>
+                </h3>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active"> Manage GRN Return Items</li>
+                </ol>
+            </section>
+
+            <section class="content">
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                                <div class="widget-header-button-comp pull-right">
+                                    <div class="button-row">
+                                        <button mat-icon-button type="button" [disabled]=" true ">
+        <mat-icon>edit</mat-icon>
+      </button>
+                                        <button mat-icon-button type="button" (click)="convert2()">
+        <mat-icon>print</mat-icon>
+      </button>
+
+                                        <button mat-icon-button type="button" (click)="addNew3()">
+        <mat-icon>add</mat-icon>
+      </button>
+                                    </div>
+                                </div>
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">GRN Items</h3>
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb4 type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="alldata" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb4" selectionMode="single" [(selection)]="selected3" (onRowUnselect)="addNew3()">
+                                    <p-column field="genaratedId" header="GRN NO" [sortable]="true"></p-column>
+                                    <p-column field="batchNumber" header="Batch Number" [sortable]="true"></p-column>
+                                    <p-column field="itemMaster.itemCode" header="Item" [sortable]="true"></p-column>
+                                    <p-column field="remainingQuantity" header="Quantity" [sortable]="true"></p-column>
+
+
+                                </p-dataTable>
+
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput id="UpdateQTy" name="UpdateQTy" [(ngModel)]="UpdateQTy" formControlName="UpdateQTy" placeholder="Return Quantity">
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-6">
+
+
+                                    <mat-form-field>
+
+                                        <mat-select [value]="reasoncategoryId" [(ngModel)]="reasoncategoryId" placeholder="Reason Catagory" id="reasoncategoryId" name="reasoncategoryId" formControlName="reasoncategoryId">
+                                            <mat-option *ngFor="let jack of this.allResonCategoryOptions" value={{jack.label}}>{{jack.label}}</mat-option>
+
+                                        </mat-select>
+                                    </mat-form-field>
+
+
+                                    <mat-form-field>
+
+                                        <mat-select [value]="reasonId" [(ngModel)]="reasonId" placeholder="Reason" id="reasonId" name="reasonId" formControlName="reasonId">
+                                            <mat-option *ngFor="let jack of this.allResonOptions" value={{jack.label}}>{{jack.label}}</mat-option>
+
+                                        </mat-select>
+                                    </mat-form-field>
+
+
+                                    <div class="button-footer">
+                                        <div class="button-row">
+                                            <button mat-raised-button color="primary" [disabled]="(!myForm2.valid ) || !(selected3 != null && selected3.id != 0)" (click)="updateReturnGRNQty(selected3?.id,selected3?.remainingQuantity,reasoncategoryId,reasonId,UpdateQTy)" type="button">Save</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 cardWidget">
+
+                        <div class="widget-comp row">
+                            <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Returned GRN items</h3>
+                                </div>
+                                <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                                    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                                    <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                                </div>
+                                <p-dataTable [value]="alldata3" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+                                    <p-column field="genaratedId" header="GRN NO" [sortable]="true"></p-column>
+                                    <p-column field="batchNumber" header="Batch Number" [sortable]="true"></p-column>
+                                    <p-column field="itemMaster.itemCode" header="Item" [sortable]="true"></p-column>
+                                    <p-column field="returnQuantity" header="Return Quantity" [sortable]="true"></p-column>
+                                    <p-column field="returnReason" header="Return Reason" [sortable]="true"></p-column>
+                                    <p-column field="returnDate" header="Return Date" [sortable]="true"></p-column>
+
+
+                                </p-dataTable>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+        </form>
+    </mat-tab>
+
+</mat-tab-group>

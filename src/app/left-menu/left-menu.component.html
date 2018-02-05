@@ -1,0 +1,36 @@
+<mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>shopping_basket </mat-icon>Setup</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list>
+            <mat-nav-list *ngFor="let link of links" routerLink="{{link.url}}" (click)="select(link)" [ngClass]="{active: isActive(link)}"> <button mat-raised-button>{{link.name}}</button></mat-nav-list>
+        </mat-list>
+
+
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon><i class="material-icons">thumbs_up_down</i> </mat-icon>Transaction</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list>
+            <mat-nav-list *ngFor="let link of links2" routerLink="{{link.url}}" (click)="select(link)" [ngClass]="{active: isActive(link)}"> <button mat-raised-button>{{link.name}}</button></mat-nav-list>
+        </mat-list>
+
+        <!--<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon><i class="material-icons"><i class="material-icons"><i class="material-icons">payment</i></i>
+                        </i>
+                    </mat-icon>Inventry Entries</mat-panel-title>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>-->
+
+
+    </mat-expansion-panel>
+
+</mat-accordion>

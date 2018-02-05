@@ -1,0 +1,168 @@
+<section class="content-header">
+    <h3>
+        Manage Cheque Returns
+        <small>Control panel</small>
+    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"> Manage Cheque Returns</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <form [formGroup]="myForm" (ngSubmit)="saveOrEdit(myForm.value)">
+
+
+
+        <div class="col-md-6">
+
+            <div class="col-md-12 cardWidget">
+
+
+                <div class="widget-comp row">
+                    <div class="col-md-6 cardWidget" [hidden]="true">
+                        <mat-form-field>
+                            <input matInput id="id" name="id" [ngModel]="selected?.id" formControlName="id" value="{{selected != null && selected.id != 0 ? selected.id:''}}" placeholder="Cheque Returns Id">
+                        </mat-form-field>
+                    </div>
+                    <div class="widget-header col-lg-12 col-md-12- col-sm-12 col-xs-12">
+                        <div class="widget-header-button-comp pull-right">
+                            <div class="button-row">
+                                <button mat-icon-button type="submit" [disabled]="true ">
+      <mat-icon>edit</mat-icon>
+    </button>
+                                <button mat-icon-button type="button" (click)="print()">
+      <mat-icon>print</mat-icon>
+    </button>
+
+                                <button mat-icon-button type="button" (click)="addNew()">
+      <mat-icon>add</mat-icon>
+    </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+                        <div class="col-md-6 cardWidget">
+                            <mat-form-field>
+                                <input matInput id="genaratedId" name="genaratedId" [ngModel]="selected?.genaratedId" readonly="true" formControlName="genaratedId" value="{{selected != null && selected.genaratedId != 0 ? selected.genaratedId:''}}" placeholder="Cheque Returns Id">
+                            </mat-form-field>
+
+
+                            <mat-form-field>
+                                <mat-select placeholder="Receipt No" id="receiptId" name="receiptId" [ngModel]="selectedAccount?.receiptId" formControlName="receiptId" (ngModelChange)="changeRecept($event)">
+                                    <mat-option *ngFor="let obj of this.allReceiptOptions" value={{obj.value}}>{{obj.label}}
+                                    </mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="customer" name="customer" formControlName="customer" placeholder="customer" [ngModel]="selected?.customer" value="{{selected != null && selected.customer  != null ? selected.customer:''}}" />
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="bank" name="bank" formControlName="bank" placeholder="Bank" type="text" />
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="branch" name="branch" formControlName="branch" placeholder="Branch" type="text" />
+                            </mat-form-field>
+
+
+                            <mat-form-field>
+                                <input matInput id="chequeNo" name="chequeNo" formControlName="chequeNo" placeholder="Cheque No" type="text" />
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput id="amount" name="amount" formControlName="amount" placeholder="Amount" type="text" />
+                            </mat-form-field>
+
+                        </div>
+
+
+                        <div class="col-md-6 cardWidget">
+
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker2" id="date" readonly="true" name="date" [ngModel]="selected?.date" formControlName="date" value="{{selected != null && selected.area != 0 ? selected.date:''}}" placeholder="Date">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker" placeholder="Receipt date" id="receiptDate" name="receiptDate" formControlName="receiptDate" [ngModel]="selected?.receiptDate" value="{{selected != null && selected.receiptDate != null ? selected.receiptDate:''}}">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-select placeholder="Reason Category" id="reasoncategoryId" name="reasoncategoryId" [ngModel]="selected?.reasoncategoryId" formControlName="reasoncategoryId" (ngModelChange)="changeReasonCategory($event)">
+                                    <mat-option *ngFor="let obj of this.allResonCategoryOptions" value={{obj.value}}>{{obj.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-select placeholder="Reason" id="reasonId" name="reasonId" [ngModel]="selected?.reasonId" formControlName="reasonId">
+                                    <mat-option *ngFor="let obj of this.allResonOptions" value={{obj.value}}>{{obj.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" id="remarks" name="remarks" formControlName="remarks" placeholder="remarks" [ngModel]="selected?.remarks" type="text" value="{{selected?  selected.remarks:''}}">
+                        </textarea>
+                            </mat-form-field>
+
+
+
+                        </div>
+                        <div class="button-footer">
+                            <div class="button-row">
+                                <button mat-raised-button color="warn" type="button" (click)="deleteById(selected.id)" [disabled]="selected == null || selected.id == 0">Delete</button>
+
+                                <button mat-raised-button color="primary" type="submit" [disabled]="(!myForm.valid ) || (selected != null && selected.id != 0)">Save</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-12 cardWidget">
+
+                <div class="widget-comp row">
+                    <div class="widget-content col-lg-12 col-md-12- col-sm-12 col-xs-12">
+
+
+                        <div class="box-header with-border">
+                            <h4 class="box-title">Cheque Returns</h4>
+                        </div>
+                        <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+                            <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+                            <input #gb type="text" pInputText size="22" style="float:left" placeholder="Global Filter">
+                        </div>
+                        <p-dataTable [value]="allData" [rows]="20" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" selectionMode="single" [(selection)]="selected" (onRowUnselect)="addNew()">
+                            <p-column field="genaratedId" header="Cheque Returns No" [sortable]="true"></p-column>
+                            <p-column field="receipt.genaratedId" header="Receipt No" [sortable]="true"></p-column>
+                            <p-column field="receipt.chequeNo" header="Cheque  No" [sortable]="true"></p-column>
+                            <p-column field="receipt.ammount" header="Ammount" [sortable]="true"></p-column>
+
+                        </p-dataTable>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</section>
